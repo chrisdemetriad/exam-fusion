@@ -1,95 +1,111 @@
+"use client";
+
+import {
+	Box,
+	Button,
+	Container,
+	Group,
+	List,
+	Text,
+	ThemeIcon,
+	Title,
+	rem,
+} from "@mantine/core";
+import { IconCheck } from "@tabler/icons-react";
 import Image from "next/image";
-import styles from "./page.module.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+	return (
+		<Container size="md">
+			<Box
+				style={{
+					display: "flex",
+					justifyContent: "space-between",
+					paddingTop: rem(120),
+				}}
+			>
+				<Box
+					style={{
+						maxWidth: rem(480),
+						marginRight: rem(80),
+					}}
+				>
+					<Title
+						style={{
+							color:
+								"light-dark(var(--mantine-color-black), var(--mantine-color-white))",
+							fontFamily: "Greycliff CF, var(--mantine-font-family)",
+							fontSize: rem(44),
+							lineHeight: 1.2,
+							fontWeight: 900,
+							"@media (max-width: 480px)": {
+								fontSize: rem(28),
+							},
+						}}
+					>
+						Your{" "}
+						<span
+							style={{
+								position: "relative",
+								backgroundColor: "var(--mantine-color-blue-light)",
+								borderRadius: "var(--mantine-radius-sm)",
+								padding: `${rem(4)} ${rem(12)}`,
+							}}
+						>
+							free
+						</span>{" "}
+						<br /> practice tests
+					</Title>
+					<Text c="dimmed" mt="md">
+						Our platform offers a comprehensive set of practice tests designed
+						to help you excel in your studies. With a user-friendly interface
+						and diverse question sets, you can practice anytime, anywhere.
+					</Text>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+					<List
+						mt={30}
+						spacing="sm"
+						size="sm"
+						icon={
+							<ThemeIcon size={20} radius="xl">
+								<IconCheck
+									style={{ width: rem(12), height: rem(12) }}
+									stroke={1.5}
+								/>
+							</ThemeIcon>
+						}
+					>
+						<List.Item>
+							<b>Accessible Anytime</b> – take practice tests at your
+							convenience, without the constraints of location or time.
+						</List.Item>
+						<List.Item>
+							<b>Diverse Question Sets</b> – access a wide variety of questions
+							across multiple subjects and difficulty levels.
+						</List.Item>
+						<List.Item>
+							<b>Instant Feedback</b> – receive immediate results and
+							performance analytics to help identify strengths and weaknesses.
+						</List.Item>
+					</List>
+
+					<Group mt={30}>
+						<Button radius="xl" size="md" style={{ flex: 1 }}>
+							Get started
+						</Button>
+					</Group>
+				</Box>
+				<Image
+					alt="Studying group"
+					src="/images/image.png"
+					width="400"
+					height="400"
+					style={{
+						width: rem(400),
+						height: rem(400),
+					}}
+				/>
+			</Box>
+		</Container>
+	);
 }
