@@ -97,7 +97,7 @@ export default function Home() {
 				</Box>
 				<Image
 					alt="Studying group"
-					src="/images/image.png"
+					src="/images/image.webp"
 					width="400"
 					height="400"
 					style={{
