@@ -1,5 +1,13 @@
 "use client";
-import { Avatar, Button, Container, Group, Text } from "@mantine/core";
+import {
+	Avatar,
+	Box,
+	Button,
+	Container,
+	Group,
+	Text,
+	rem,
+} from "@mantine/core";
 import type { Session } from "next-auth";
 import { signIn, signOut, useSession } from "next-auth/react";
 
@@ -43,10 +51,26 @@ export default function Header() {
 				style={{
 					height: "56px",
 					display: "flex",
-					justifyContent: "end",
+					justifyContent: "space-between",
 					alignItems: "center",
 				}}
 			>
+				<Box>
+					<Text
+						size="xl"
+						style={{
+							fontFamily: "var(--font-comfortaa)",
+							textTransform: "uppercase",
+							letterSpacing: rem(1),
+							color: "darkorchid",
+						}}
+					>
+						Exam
+						<Box component="span" style={{ color: "blueviolet" }}>
+							Fusion
+						</Box>
+					</Text>
+				</Box>
 				<Group>
 					<AuthButton />
 				</Group>

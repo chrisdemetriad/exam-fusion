@@ -12,6 +12,7 @@ import type React from "react";
 import "./globals.css";
 // import '@mantine/dates/styles.css';
 import { getServerSession } from "next-auth";
+import { Comfortaa } from "next/font/google";
 import Header from "./components/Header";
 import { Navbar } from "./components/NavBar";
 import SessionProvider from "./components/SessionProvider";
@@ -25,6 +26,12 @@ const geistMono = localFont({
 	src: "./fonts/GeistMonoVF.woff",
 	variable: "--font-geist-mono",
 	weight: "100 900",
+});
+
+const comfortaa = Comfortaa({
+	weight: ["400", "700"],
+	subsets: ["latin"],
+	variable: "--font-comfortaa",
 });
 
 export const metadata: Metadata = {
@@ -49,7 +56,9 @@ export default async function RootLayout({
 					content={metadata.description ?? "Default Description"}
 				/>
 			</head>
-			<body className={`${geistSans.variable} ${geistMono.variable}`}>
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable}`}
+			>
 				<MantineProvider>
 					<SessionProvider session={session}>
 						<Flex direction="column" style={{ height: "100vh" }}>
