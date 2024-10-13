@@ -1,3 +1,4 @@
+import { ContactForm } from "@/app/components/ContactForm";
 import { Box } from "@mantine/core";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -8,5 +9,9 @@ export default async function HelpsRoute(): Promise<JSX.Element> {
 		redirect("/");
 	}
 
-	return <Box>Help</Box>;
+	return (
+		<Box>
+			<ContactForm />
+		</Box>
+	);
 }
