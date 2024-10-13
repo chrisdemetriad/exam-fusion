@@ -38,7 +38,7 @@ export default function Home() {
 							fontSize: rem(44),
 							lineHeight: 1.2,
 							fontWeight: 900,
-							"@media (max-width: 480px)": {
+							"@media (maxWidth: 480px)": {
 								fontSize: rem(28),
 							},
 						}}
