@@ -1,0 +1,506 @@
+[
+	{
+		"questionText": "Which of the following may imply terms into contracts?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The parties to the contract", "isCorrect": true },
+			{ "answerText": "Third parties" },
+			{ "answerText": "Statute" }
+		]
+	},
+	{
+		"questionText": "There are a number of ways in which investors can take an interest in a company and such different interests have different rights attached to them. Which of the following NORMALLY participate in surplus capital?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Debentures secured by a floating charge" },
+			{ "answerText": "Preference shares" },
+			{ "answerText": "Ordinary shares", "isCorrect": true },
+			{ "answerText": "Debentures secured by a fixed charge" }
+		]
+	},
+	{
+		"questionText": "In the context of the English legal system, which of the following courts ONLY has civil jurisdiction?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "High Court" },
+			{ "answerText": "County court", "isCorrect": true },
+			{ "answerText": "Magistrates’ court" }
+		]
+	},
+	{
+		"questionText": "In the context of employment law, which of the following is an AUTOMATICALLY fair ground for dismissing an employee?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Refusal to join a trade union" },
+			{ "answerText": "Redundancy", "isCorrect": true },
+			{ "answerText": "Unofficial industrial action" },
+			{ "answerText": "Legal prohibition" }
+		]
+	},
+	{
+		"questionText": "Which of the following business forms does the use of the abbreviation ‘Ltd’ after the name of a business indicate?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "A private limited company", "isCorrect": true },
+			{ "answerText": "A limited liability partnership" },
+			{ "answerText": "A limited partnership" }
+		]
+	},
+	{
+		"questionText": "Jas has been continuously employed for six years. Which of the following states the minimum period of notice she is entitled to?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Six weeks", "isCorrect": true },
+			{ "answerText": "One month" },
+			{ "answerText": "Three months" }
+		]
+	},
+	{
+		"questionText": "Which of the following is indicated by the abbreviation ‘Ltd’ at the end of a company’s name?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "The shares are freely transferable on the stock exchange"
+			},
+			{
+				"answerText": "The shares may not be offered to the public",
+				"isCorrect": true
+			},
+			{ "answerText": "The shares are not transferable" }
+		]
+	},
+	{
+		"questionText": "Section 122 Insolvency Act 1986 specifically provides a distinct ground for applying to have a company wound up on the ground that it is just and equitable to do so. Which of the following parties may petition to have a company compulsorily wound up under that provision?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The Secretary of State" },
+			{ "answerText": "Debentureholders of the company" },
+			{ "answerText": "Creditors of the company", "isCorrect": true },
+			{ "answerText": "Shareholders of the company" }
+		]
+	},
+	{
+		"questionText": "Mo has a significant holding in the shares of Nova Ltd. He wishes to use his shareholding to remove Owen from the board of directors but is not sure how to do so. Which of the following must be used to remove a director from office?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "An ordinary resolution" },
+			{
+				"answerText": "An ordinary resolution with special notice",
+				"isCorrect": true
+			},
+			{ "answerText": "A special resolution" },
+			{ "answerText": "A written resolution" }
+		]
+	},
+	{
+		"questionText": "A written ordinary resolution requires the approval of which of the following?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Unanimous approval of those entitled to vote" },
+			{
+				"answerText": "More than 50% of the total voting rights of members actually voting",
+				"isCorrect": true
+			},
+			{
+				"answerText": "More than 50% of the total voting rights of eligible members"
+			}
+		]
+	},
+	{
+		"questionText": "Employment law is a mixture of common law and statutory provisions. Which of the following is purely based on statute law?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Summary dismissal" },
+			{ "answerText": "Unfair dismissal", "isCorrect": true },
+			{ "answerText": "Wrongful dismissal" }
+		]
+	},
+	{
+		"questionText": "Jo’s contract of employment states that she is employed in Glasgow. When her employer tells her that she has to work in London, some 500 miles away, Jo immediately resigns. Which of the following may this be considered an example of?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Summary dismissal" },
+			{ "answerText": "Constructive dismissal", "isCorrect": true },
+			{ "answerText": "Unfair dismissal" }
+		]
+	},
+	{
+		"questionText": "Which parties are bound by the terms of the tender when one party submits a tender?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The person requesting the tender" },
+			{ "answerText": "The person submitting the tender" },
+			{ "answerText": "Neither party", "isCorrect": true },
+			{ "answerText": "Both parties" }
+		]
+	},
+	{
+		"questionText": "In the context of contract law, a bid at an auction is which of the following?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "A counter-offer" },
+			{ "answerText": "An offer" },
+			{ "answerText": "An acceptance" },
+			{ "answerText": "An invitation to treat", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "Bee injured her eye after failing to close a safety gate on a machine as instructed. She was also not wearing mandatory safety goggles as required by her contract of employment. Which of the following is this an example of?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Novus actus interveniens" },
+			{ "answerText": "Volenti non fit injuria" },
+			{ "answerText": "Res ipsa loquitur" },
+			{ "answerText": "Contributory negligence", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "What is the effect of a finding of contributory negligence in the law of tort?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "It decreases the level of damages", "isCorrect": true },
+			{ "answerText": "It reverses the payment of damages" },
+			{ "answerText": "It removes the requirement to pay damages" }
+		]
+	},
+	{
+		"questionText": "In the context of the English legal system, which of the following courts ONLY has criminal jurisdiction?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Magistrates’ court", "isCorrect": true },
+			{ "answerText": "Crown Court" },
+			{ "answerText": "County court" }
+		]
+	},
+	{
+		"questionText": "Imran claims that Zak owes him £1,000 as a result of a breach of contract. In which court will Imran start his action against Zak?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The county court", "isCorrect": true },
+			{ "answerText": "The magistrates’ court" },
+			{ "answerText": "The High Court" }
+		]
+	},
+	{
+		"questionText": "In the context of case law, which of the following applies to an obiter dictum?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "It is binding on all future courts" },
+			{
+				"answerText": "It is not binding outside the court it was issued in",
+				"isCorrect": true
+			},
+			{ "answerText": "It is binding on all lower courts" },
+			{ "answerText": "It is not binding on any courts" }
+		]
+	},
+	{
+		"questionText": "Contributory negligence arises as a result of the fault of which of the following?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "A third party" },
+			{ "answerText": "The respondent" },
+			{ "answerText": "The claimant", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "Ann got trapped in a public toilet due to the lock being faulty. Rather than wait for help, she tried to climb out of the window but fell and broke her leg. Which of the following is this an example of?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Res ipsa loquitur" },
+			{ "answerText": "Volenti non fit injuria" },
+			{ "answerText": "Novus actus interveniens", "isCorrect": true },
+			{ "answerText": "Contributory negligence" }
+		]
+	},
+	{
+		"questionText": "The law treats employees differently from the self-employed and has established a number of tests to distinguish between the two categories. Which of the following is NOT a test for establishing an employment relationship?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The integration test" },
+			{ "answerText": "The control test" },
+			{ "answerText": "The subordinate test", "isCorrect": true },
+			{ "answerText": "The economic reality test" }
+		]
+	},
+	{
+		"questionText": "Breach of which of the following terms does NOT allow the possibility of the aggrieved party terminating the contract?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "An innominate term" },
+			{ "answerText": "A warranty", "isCorrect": true },
+			{ "answerText": "A condition" }
+		]
+	},
+	{
+		"questionText": "Which of the following, in the context of entering into a contract, constitutes a binding offer to sell a unique item of furniture?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "Placing an advert in a newspaper with a price attached"
+			},
+			{
+				"answerText": "Placing it on display inside a shop with a price attached",
+				"isCorrect": true
+			},
+			{
+				"answerText": "Telling someone the price you may be willing to accept for it"
+			},
+			{
+				"answerText": "Telling someone you will reduce the marked price on it by 10%"
+			}
+		]
+	},
+	{
+		"questionText": "Mark has received the agenda for the annual general meeting of Rova Ltd, a company he has shares in. The agenda contains a number of resolutions to be proposed at the meeting, but being a new member Mark is not certain as to what is exactly involved. In the context of company meetings, which of the following must be passed by a 75% majority to be effective?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "A written resolution" },
+			{ "answerText": "A special resolution", "isCorrect": true },
+			{ "answerText": "An ordinary resolution with special notice" }
+		]
+	},
+	{
+		"questionText": "Section 122 Insolvency Act 1986 provides a number of distinct grounds for applying to have a company wound up on a compulsory basis. Which of the following is NOT a ground for the compulsory winding up of a company under that provision?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "The company has not started trading within the first 12 months"
+			},
+			{
+				"answerText": "The company has not received a trading certificate within its first 12 months"
+			},
+			{
+				"answerText": "The company has altered its primary business within the first 12 months",
+				"isCorrect": true
+			},
+			{ "answerText": "The company has suspended its business for 12 months" }
+		]
+	},
+	{
+		"questionText": "Abe issued an invitation to tender for a contract and Bea submitted her terms. Which of the following statements is accurate?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Abe made an offer which Bea accepted" },
+			{
+				"answerText": "Abe made an invitation to treat and Bea made an offer",
+				"isCorrect": true
+			},
+			{ "answerText": "Both Abe and Bea made invitations to treat" },
+			{ "answerText": "Abe made an offer and Bea made a counter-offer" }
+		]
+	},
+	{
+		"questionText": "In the context of statutory interpretation, which of the following requires judges to consider the wrong which the legislation was intended to prevent?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The mischief rule", "isCorrect": true },
+			{ "answerText": "The golden rule" },
+			{ "answerText": "The literal rule" }
+		]
+	},
+	{
+		"questionText": "It is not unusual for some company investments to carry cumulative dividend rights. Which of the following statements about the declaration of cumulative dividends is correct?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "They are not paid until profits reach a certain percentage"
+			},
+			{ "answerText": "They are paid out of capital" },
+			{ "answerText": "They are paid in the form of a bonus issue" },
+			{
+				"answerText": "They are paid when profits are available for that purpose",
+				"isCorrect": true
+			}
+		]
+	},
+	{
+		"questionText": "Which of the following statements in relation to effective consideration is correct?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "It must be sufficient but need not be adequate",
+				"isCorrect": true
+			},
+			{ "answerText": "It must be adequate but need not be sufficient" },
+			{ "answerText": "It must be both adequate and sufficient" }
+		]
+	},
+	{
+		"questionText": "In the context of the English legal system, which of the following defines the ratio decidendi of a judgement?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The decision in a previous case" },
+			{ "answerText": "The facts of the case" },
+			{
+				"answerText": "The legal reason for deciding the case",
+				"isCorrect": true
+			},
+			{ "answerText": "The future application of the case" }
+		]
+	},
+	{
+		"questionText": "Dan has been accused of a criminal offence and is due to be tried soon. He denies responsibility, claiming that the prosecution has no evidence that he committed the offence in question. Which of the following describes the standard of proof in a criminal case?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Beyond evident doubt" },
+			{ "answerText": "On the balance of probability" },
+			{ "answerText": "On the balance of certainty" },
+			{ "answerText": "Beyond reasonable doubt", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "Which of the following statements relating to limited liability partnerships is correct?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "They must have at least one unlimited member" },
+			{
+				"answerText": "They must have a minimum of two members",
+				"isCorrect": true
+			},
+			{ "answerText": "They are limited to a maximum of 20 members" }
+		]
+	},
+	{
+		"questionText": "Ho subscribed for some partly paid-up shares in Io Ltd. The company has not been successful and Ho has been told that when Io Ltd is liquidated, he will have to pay the amount remaining unpaid on his shares. However, he is not sure to whom such payment should be made. In limited liability companies, shareholders are liable to which party for any unpaid capital?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Creditors" },
+			{ "answerText": "The liquidator", "isCorrect": true },
+			{ "answerText": "The directors" },
+			{ "answerText": "The company" }
+		]
+	},
+	{
+		"questionText": "Which of the following CANNOT petition for the compulsory winding up of a company on the grounds of INSOLVENCY under s.122 Insolvency Act 1986?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The Secretary of State" },
+			{ "answerText": "The company’s creditors" },
+			{ "answerText": "The members of the company" },
+			{ "answerText": "The board of directors", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "Money laundering involves a number of phases in the overall procedure. Which TWO of the following are recognised phases in money laundering?",
+		"answerType": "checkbox",
+		"possibleAnswers": [
+			{ "answerText": "Layering", "isCorrect": true },
+			{ "answerText": "Distribution" },
+			{ "answerText": "Integration", "isCorrect": true },
+			{ "answerText": "Relocation" }
+		]
+	},
+	{
+		"questionText": "Which TWO of the following are AUTOMATICALLY unfair grounds for dismissing an employee?",
+		"answerType": "checkbox",
+		"possibleAnswers": [
+			{ "answerText": "Constructive dismissal" },
+			{ "answerText": "Engaging in trade union activity", "isCorrect": true },
+			{
+				"answerText": "Dismissal on transfer of employment to a new undertaking",
+				"isCorrect": true
+			},
+			{ "answerText": "Redundancy" }
+		]
+	},
+	{
+		"questionText": "In the context of the law of agency, an agent will NOT be liable for a contract in which of the following instances?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "Where the agent acts on their own behalf although claiming to be an agent"
+			},
+			{
+				"answerText": "Where the agent intends to take the benefit of the contract and does not disclose they are acting as an agent"
+			},
+			{
+				"answerText": "Where the agent fails to disclose that they are acting as such",
+				"isCorrect": true
+			}
+		]
+	},
+	{
+		"questionText": "The Employment Rights Act (ERA) 1996 sets out remedies in relation to unfair dismissal. Which of the following is NOT a potential remedy for unfair dismissal under the ERA 1996?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "Reinstatement" },
+			{ "answerText": "Re-engagement" },
+			{ "answerText": "Re-employment", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "Which TWO statements are correct in relation to designated members in limited liability partnerships (LLPs)?",
+		"answerType": "checkbox",
+		"possibleAnswers": [
+			{ "answerText": "They have limited liability", "isCorrect": true },
+			{ "answerText": "They are fully liable for partnership debts" },
+			{
+				"answerText": "They are responsible for filing the LLP’s accounts",
+				"isCorrect": true
+			},
+			{
+				"answerText": "They must not take part in the day-to-day operation of the business"
+			}
+		]
+	},
+	{
+		"questionText": "The term insider dealing relates to a number of potential criminal offences. Which TWO of the following are crimes in relation to insider dealing?",
+		"answerType": "checkbox",
+		"possibleAnswers": [
+			{ "answerText": "Failing to report insider dealing" },
+			{ "answerText": "Passing on inside information", "isCorrect": true },
+			{
+				"answerText": "Encouraging someone to engage in insider dealing",
+				"isCorrect": true
+			},
+			{ "answerText": "Concealing insider dealing" }
+		]
+	},
+	{
+		"questionText": "Which of the following can be accepted so as to form a binding contract?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "A statement of intent" },
+			{ "answerText": "A quotation of price" },
+			{ "answerText": "An agreement to enter into a future contract" },
+			{ "answerText": "A supply of information", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "Contracts are legally enforceable agreements. Which of the following statements regarding contractual agreements is true?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "They must be in writing" },
+			{ "answerText": "They must be evidenced in writing" },
+			{ "answerText": "They need not be in writing", "isCorrect": true }
+		]
+	},
+	{
+		"questionText": "In relation to the law of negligence, a finding of volenti non fit injuria arises from the action of which of the following?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "The claimant", "isCorrect": true },
+			{ "answerText": "The respondent" },
+			{ "answerText": "An unforeseeable event" },
+			{ "answerText": "A third party" }
+		]
+	},
+	{
+		"questionText": "In the context of the law of contract, which TWO of the following statements in relation to a letter of comfort are correct?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{
+				"answerText": "It is issued by a parent company’s bank",
+				"isCorrect": true
+			},
+			{ "answerText": "It is issued by a parent company", "isCorrect": true },
+			{
+				"answerText": "It is a non-binding statement of present intention to pay a subsidiary company’s future debts"
+			},
+			{
+				"answerText": "It is a binding promise to pay a subsidiary company’s future debts"
+			}
+		]
+	}
+]
