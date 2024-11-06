@@ -1,6 +1,15 @@
 "use client";
 
-import { Badge, Box, Button, Card, Group, Stack, Text } from "@mantine/core";
+import {
+	Badge,
+	Box,
+	Button,
+	Card,
+	Group,
+	Stack,
+	Text,
+	Loader,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTestStore } from "../stores/stateStore";
@@ -55,25 +64,9 @@ const saveTest = async (testData: TestData) => {
 
 export const Questions = () => {
 	const [tests, setTests] = useState<Question[]>([]);
-
-	useEffect(() => {
-		const getTests = async () => {
-			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests/acca`);
-				if (!response.ok) {
-					throw new Error("Couldn't get tests");
-				}
-				const data = await response.json();
-				setTests(data[0].questions);
-			} catch (error) {
-				console.log((error as Error).message);
-			}
-		};
-		getTests();
-	}, []);
+	const [loading, setLoading] = useState(true);
 
 	const { data: session } = useSession();
-
 	const router = useRouter();
 	const addAnswer = useTestStore((state) => state.addAnswer);
 	const resetTest = useTestStore((state) => state.resetTest);
@@ -90,8 +83,32 @@ export const Questions = () => {
 	const startTime = new Date();
 
 	useEffect(() => {
+		const getTests = async () => {
+			try {
+				const response = await fetch(`${baseUrl}/api/v1/tests/acca`);
+				if (!response.ok) {
+					throw new Error("Couldn't get tests");
+				}
+				const data = await response.json();
+				setTests(data[0].questions);
+			} catch (error) {
+				console.log((error as Error).message);
+			} finally {
+				setLoading(false);
+			}
+		};
+
 		resetTest();
+		getTests();
 	}, [resetTest]);
+
+	if (tests.length === 0 || loading) {
+		return (
+			<Box pos="relative">
+				<Loader color="indigo" size="sm" type="dots" />
+			</Box>
+		);
+	}
 
 	const currentQuestion = tests[currentIndex];
 	const totalQuestions = tests.length;
