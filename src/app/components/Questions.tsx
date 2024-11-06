@@ -4,7 +4,6 @@ import { Badge, Box, Button, Card, Group, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTestStore } from "../stores/stateStore";
-import accaQuestions from "../../../public/data/accaQuestions.json";
 import { useSession } from "next-auth/react";
 interface Answers {
 	answerText: string;
@@ -36,8 +35,9 @@ const getCorrectAnswer = (question: Question) =>
 const isAnswerCorrect = (selectedAnswer: string, question: Question) =>
 	selectedAnswer === getCorrectAnswer(question);
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const saveTest = async (testData: TestData) => {
-	const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 	try {
 		const response = await fetch(`${baseUrl}/api/v1/tests/acca/save`, {
 			method: "POST",
@@ -54,6 +54,24 @@ const saveTest = async (testData: TestData) => {
 };
 
 export const Questions = () => {
+	const [tests, setTests] = useState<Question[]>([]);
+
+	useEffect(() => {
+		const getTests = async () => {
+			try {
+				const response = await fetch(`${baseUrl}/api/v1/tests/acca`);
+				if (!response.ok) {
+					throw new Error("Couldn't get tests");
+				}
+				const data = await response.json();
+				setTests(data[0].questions);
+			} catch (error) {
+				console.log((error as Error).message);
+			}
+		};
+		getTests();
+	}, []);
+
 	const { data: session } = useSession();
 
 	const router = useRouter();
@@ -75,8 +93,8 @@ export const Questions = () => {
 		resetTest();
 	}, [resetTest]);
 
-	const currentQuestion = accaQuestions[currentIndex];
-	const totalQuestions = accaQuestions.length;
+	const currentQuestion = tests[currentIndex];
+	const totalQuestions = tests.length;
 
 	const handleAnswerSelect = (selectedValue: string) => {
 		if (feedback.show) return;
