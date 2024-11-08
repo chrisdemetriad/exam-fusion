@@ -8,15 +8,18 @@ export const Summary = () => {
 	const answers = useTestStore((state) => state.answers);
 
 	const expanded = answers
-		.filter((answer) => !answer.isCorrect)
-		.map((answer) => answer.id.toString());
+		.filter((answer) => !answer.isCorrect && answer.id !== undefined)
+		.map((answer) => (answer.id !== undefined ? answer.id.toString() : ""));
 
 	return (
 		<Box>
 			<Text>Summary</Text>
 			<Accordion multiple defaultValue={expanded}>
 				{answers.map((answer) => (
-					<Accordion.Item key={answer.id} value={answer.id.toString()}>
+					<Accordion.Item
+						key={answer.id ?? Math.random()}
+						value={answer.id?.toString() || Math.random().toString()}
+					>
 						<Accordion.Control
 							icon={
 								<ThemeIcon
