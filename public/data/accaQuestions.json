@@ -11,23 +11,67 @@
 	},
 	{
 		"id": 2,
-		"questionText": "There are a number of ways in which investors can take an interest in a company and such different interests have different rights attached to them. Which of the following NORMALLY participate in surplus capital?",
-		"answerType": "radio",
+		"questionText": "The term insider dealing relates to a number of potential criminal offences. Which TWO of the following are crimes in relation to insider dealing?",
+		"answerType": "checkbox",
 		"possibleAnswers": [
-			{ "answerText": "Debentures secured by a floating charge" },
-			{ "answerText": "Preference shares" },
-			{ "answerText": "Ordinary shares", "isCorrect": true },
-			{ "answerText": "Debentures secured by a fixed charge" }
+			{ "answerText": "Failing to report insider dealing" },
+			{ "answerText": "Passing on inside information", "isCorrect": true },
+			{
+				"answerText": "Encouraging someone to engage in insider dealing",
+				"isCorrect": true
+			},
+			{ "answerText": "Concealing insider dealing" }
 		]
 	},
 	{
 		"id": 3,
-		"questionText": "In the context of the English legal system, which of the following courts ONLY has civil jurisdiction?",
+		"questionText": "Which of the following can be accepted so as to form a binding contract?",
 		"answerType": "radio",
 		"possibleAnswers": [
-			{ "answerText": "High Court" },
-			{ "answerText": "County court", "isCorrect": true },
-			{ "answerText": "Magistrates' court" }
+			{ "answerText": "A statement of intent" },
+			{ "answerText": "A quotation of price" },
+			{ "answerText": "An agreement to enter into a future contract" },
+			{ "answerText": "A supply of information", "isCorrect": true }
+		]
+	},
+	{
+		"id": 4,
+		"questionText": "Contracts are legally enforceable agreements. Which of the following statements regarding contractual agreements is true?",
+		"answerType": "radio",
+		"possibleAnswers": [
+			{ "answerText": "They must be in writing" },
+			{ "answerText": "They must be evidenced in writing" },
+			{ "answerText": "They need not be in writing", "isCorrect": true }
+		]
+	},
+	{
+		"id": 5,
+		"questionText": "In relation to the law of negligence, a finding of volenti non fit injuria arises from the action of which of the following?",
+		"answerType": "checkbox",
+		"possibleAnswers": [
+			{ "answerText": "The claimant", "isCorrect": true },
+			{ "answerText": "The respondent", "isCorrect": true },
+			{ "answerText": "An unforeseeable event" },
+			{ "answerText": "A third party" }
+		]
+	},
+	{
+		"id": 6,
+		"questionText": "In the context of the law of contract, which TWO of the following statements in relation to a letter of comfort are correct?",
+		"answerType": "checkbox",
+		"possibleAnswers": [
+			{ "answerText": "It is issued by a parent company's bank" },
+			{
+				"answerText": "It is issued by a parent company",
+				"isCorrect": true
+			},
+			{
+				"answerText": "It is a non-binding statement of present intention to pay a subsidiary company's future debts",
+				"isCorrect": true
+			},
+			{
+				"answerText": "It is a binding promise to pay a subsidiary company's future debts"
+			}
 		]
 	}
 ]
