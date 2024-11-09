@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core";
+import { Leaderboard } from "@/app/components/Leaderboard";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -8,5 +8,5 @@ export default async function LeaderboardsRoute(): Promise<JSX.Element> {
 		redirect("/");
 	}
 
-	return <Box>Leaderboards</Box>;
+	return <Leaderboard />;
 }
