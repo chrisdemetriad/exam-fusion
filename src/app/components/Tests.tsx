@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import {
 	Table,
 	ScrollArea,
@@ -11,6 +11,8 @@ import {
 	TextInput,
 	rem,
 	Badge,
+	Box,
+	Loader,
 } from "@mantine/core";
 import {
 	IconSelector,
@@ -30,8 +32,8 @@ interface TestData {
 	description: string;
 }
 
-interface ThProps {
-	children: React.ReactNode;
+interface TableHeader {
+	children: ReactNode;
 	reversed: boolean;
 	sorted: boolean;
 	onSort(): void;
@@ -55,7 +57,7 @@ const styles = {
 	},
 };
 
-const TableHeader = ({ children, reversed, sorted, onSort }: ThProps) => {
+const TableHeader = ({ children, reversed, sorted, onSort }: TableHeader) => {
 	const Icon = sorted
 		? reversed
 			? IconChevronUp
@@ -109,6 +111,7 @@ const sortData = (
 export const Tests = () => {
 	const [tests, setTests] = useState<TestData[]>([]);
 	const [search, setSearch] = useState("");
+	const [loading, setLoading] = useState(true);
 	const [sortedData, setSortedData] = useState<TestData[]>([]);
 	const [sortBy, setSortBy] = useState<keyof TestData | null>(null);
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
@@ -124,6 +127,8 @@ export const Tests = () => {
 				setSortedData(data);
 			} catch (error) {
 				console.error("Couldn't get tests: ", error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -149,7 +154,7 @@ export const Tests = () => {
 		);
 	};
 
-	const handleRowClick = (provider, id) => {
+	const handleRowClick = (provider: string, id: string) => {
 		router.push(`/practice/${provider}/${id}`);
 	};
 
@@ -161,7 +166,7 @@ export const Tests = () => {
 		>
 			<Table.Td>{test.provider}</Table.Td>
 			<Table.Td>
-				<Badge variant="outline" radius="sm">
+				<Badge variant="outline" radius="xs">
 					{test.level}
 				</Badge>
 			</Table.Td>
@@ -171,16 +176,21 @@ export const Tests = () => {
 		</Table.Tr>
 	));
 
+	if (rows.length === 0 || loading) {
+		return (
+			<Box pos="relative">
+				<Loader color="indigo" size="sm" type="dots" />
+			</Box>
+		);
+	}
+
 	return (
 		<ScrollArea>
 			<TextInput
 				placeholder="Search by any field"
 				mb="md"
 				leftSection={
-					<IconSearch
-						style={{ width: rem(16), height: rem(16) }}
-						stroke={1.5}
-					/>
+					<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1} />
 				}
 				value={search}
 				onChange={handleSearchChange}
@@ -223,19 +233,7 @@ export const Tests = () => {
 						</TableHeader>
 					</Table.Tr>
 				</Table.Thead>
-				<Table.Tbody>
-					{rows.length > 0 ? (
-						rows
-					) : (
-						<Table.Tr>
-							<Table.Td colSpan={4}>
-								<Text fw={500} ta="center">
-									Nothing found
-								</Text>
-							</Table.Td>
-						</Table.Tr>
-					)}
-				</Table.Tbody>
+				<Table.Tbody>{rows}</Table.Tbody>
 			</Table>
 		</ScrollArea>
 	);
