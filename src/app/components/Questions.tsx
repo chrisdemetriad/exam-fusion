@@ -12,11 +12,9 @@ import {
 	Loader,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useTestStore } from "../stores/stateStore";
 import { useSession } from "next-auth/react";
-
-// import questionsData from "../../../public/data/accaQuestions.json";
 
 interface Answers {
 	answerText: string;
@@ -31,6 +29,7 @@ interface Question {
 }
 
 interface TestData {
+	_id: string;
 	userId: string;
 	testType: string;
 	startTime: Date;
@@ -59,29 +58,33 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const saveTest = async (testData: TestData) => {
 	try {
-		const response = await fetch(`${baseUrl}/api/v1/tests/acca/save`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(testData),
-		});
+		const response = await fetch(
+			`${baseUrl}/api/v1/tests/${testData.testType}/${testData._id}/attempt`,
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(testData),
+			},
+		);
 		if (!response.ok) {
 			const errorData = await response.json();
 			throw new Error(
 				`Couldn't save test: ${errorData.message || "Unknown error"}`,
 			);
 		}
-		console.log("Test saved");
 	} catch (error) {
 		console.error("Couldn't save test: ", error);
 	}
 };
 
 export const Questions = () => {
-	const [tests, setTests] = useState<Question[]>([]);
+	const [questions, setQuestions] = useState<Question[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	const { data: session } = useSession();
 	const router = useRouter();
+	const params = useParams();
+	const { provider, testId } = params;
 	const addAnswer = useTestStore((state) => state.addAnswer);
 	const resetTest = useTestStore((state) => state.resetTest);
 
@@ -97,14 +100,18 @@ export const Questions = () => {
 	const startTime = new Date();
 
 	useEffect(() => {
+		if (!provider || !testId) return;
+
 		const getTests = async () => {
 			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests/acca`);
+				const response = await fetch(
+					`${baseUrl}/api/v1/tests/${provider}/${testId}`,
+				);
 				if (!response.ok) {
 					throw new Error("Couldn't get tests");
 				}
 				const data = await response.json();
-				setTests(data[0].questions);
+				setQuestions(data.questions);
 			} catch (error) {
 				console.log((error as Error).message);
 			} finally {
@@ -114,9 +121,9 @@ export const Questions = () => {
 
 		resetTest();
 		getTests();
-	}, [resetTest]);
+	}, [provider, testId, resetTest]);
 
-	if (tests.length === 0 || loading) {
+	if (questions.length === 0 || loading) {
 		return (
 			<Box pos="relative">
 				<Loader color="indigo" size="sm" type="dots" />
@@ -124,8 +131,8 @@ export const Questions = () => {
 		);
 	}
 
-	const currentQuestion = tests[currentIndex];
-	const totalQuestions = tests.length;
+	const currentQuestion = questions[currentIndex];
+	const totalQuestions = questions.length;
 
 	const handleAnswerSelect = (selectedValue: string) => {
 		if (feedback.show) return;
@@ -150,7 +157,6 @@ export const Questions = () => {
 	};
 
 	const handleSubmitAnswer = (answers: string[]) => {
-		console.log("Current question:", currentQuestion);
 		const correct = isAnswerCorrect(answers, currentQuestion);
 		setFeedback({ isCorrect: correct, show: true });
 
@@ -182,8 +188,9 @@ export const Questions = () => {
 				}));
 
 			const testData: TestData = {
+				_id: testId as string,
 				userId: session?.user?.email || "unknown",
-				testType: "ACCA",
+				testType: provider as string,
 				startTime,
 				finishTime,
 				wrongAnswers,
@@ -197,7 +204,7 @@ export const Questions = () => {
 	return (
 		<Box>
 			<Group mb={20} justify="space-between">
-				<h3>ACCA Test Questions</h3>
+				<h3>{provider} Test Questions</h3>
 				<Badge variant="outline" radius="sm">
 					Question {currentIndex + 1} out of {totalQuestions}
 				</Badge>

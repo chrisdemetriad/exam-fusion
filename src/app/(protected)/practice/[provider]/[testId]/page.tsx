@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { Tests } from "@/app/components/Tests";
+import { Questions } from "@/app/components/Questions";
 
 export default async function PracticeRoute() {
 	const session = await getServerSession();
@@ -8,5 +8,5 @@ export default async function PracticeRoute() {
 		redirect("/");
 	}
 
-	return <Tests />;
+	return <Questions />;
 }
