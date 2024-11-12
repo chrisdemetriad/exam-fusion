@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useTestStore } from "../stores/stateStore";
 import { useSession } from "next-auth/react";
+import Timer from "./Timer";
 
 interface Answers {
 	answerText: string;
@@ -80,6 +81,7 @@ const saveTest = async (testData: TestData) => {
 export const Questions = () => {
 	const [questions, setQuestions] = useState<Question[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [started, setStarted] = useState(false);
 
 	const { data: session } = useSession();
 	const router = useRouter();
@@ -123,10 +125,28 @@ export const Questions = () => {
 		getTests();
 	}, [provider, testId, resetTest]);
 
-	if (questions.length === 0 || loading) {
+	const handleStartTest = () => {
+		setStarted(true);
+	};
+
+	if (loading) {
 		return (
 			<Box pos="relative">
 				<Loader color="indigo" size="sm" type="dots" />
+			</Box>
+		);
+	}
+
+	if (!started) {
+		return (
+			<Box>
+				<Text size="xl" mb="md">
+					{provider} Test
+				</Text>
+				<Text mb="md">This test consists of {questions.length} questions.</Text>
+				<Text mb="md">There is no time limit.</Text>
+				<Text mb="md">Please press "Start" to begin.</Text>
+				<Button onClick={handleStartTest}>Start</Button>
 			</Box>
 		);
 	}
@@ -205,6 +225,7 @@ export const Questions = () => {
 		<Box>
 			<Group mb={20} justify="space-between">
 				<h3>{provider} Test Questions</h3>
+				<Timer />
 				<Badge variant="outline" radius="sm">
 					Question {currentIndex + 1} out of {totalQuestions}
 				</Badge>

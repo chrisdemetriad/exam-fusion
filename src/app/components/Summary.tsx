@@ -6,6 +6,7 @@ import { IconCircleCheck, IconX } from "@tabler/icons-react";
 
 export const Summary = () => {
 	const answers = useTestStore((state) => state.answers);
+	const duration = useTestStore((state) => state.duration);
 
 	const expanded = answers
 		.filter((answer) => !answer.isCorrect && answer.id !== undefined)
@@ -13,7 +14,7 @@ export const Summary = () => {
 
 	return (
 		<Box>
-			<Text>Summary</Text>
+			<Text>Summary - {duration} seconds</Text>
 			<Accordion multiple defaultValue={expanded}>
 				{answers.map((answer) => (
 					<Accordion.Item
