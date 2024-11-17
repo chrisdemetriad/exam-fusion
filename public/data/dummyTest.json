@@ -1,76 +1,76 @@
 [
 	{
 		"id": 1,
-		"questionText": "Which of the following may imply terms into contracts?",
-		"answerType": "radio",
-		"possibleAnswers": [
-			{ "answerText": "The parties to the contract", "isCorrect": true },
-			{ "answerText": "Third parties" },
-			{ "answerText": "Statute" }
+		"question": "Which of the following may imply terms into contracts?",
+		"type": "radio",
+		"answers": [
+			{ "answer": "The parties to the contract", "isCorrect": true },
+			{ "answer": "Third parties" },
+			{ "answer": "Statute" }
 		]
 	},
 	{
 		"id": 2,
-		"questionText": "The term insider dealing relates to a number of potential criminal offences. Which TWO of the following are crimes in relation to insider dealing?",
-		"answerType": "checkbox",
-		"possibleAnswers": [
-			{ "answerText": "Failing to report insider dealing" },
-			{ "answerText": "Passing on inside information", "isCorrect": true },
+		"question": "The term insider dealing relates to a number of potential criminal offences. Which TWO of the following are crimes in relation to insider dealing?",
+		"type": "checkbox",
+		"answers": [
+			{ "answer": "Failing to report insider dealing" },
+			{ "answer": "Passing on inside information", "isCorrect": true },
 			{
-				"answerText": "Encouraging someone to engage in insider dealing",
+				"answer": "Encouraging someone to engage in insider dealing",
 				"isCorrect": true
 			},
-			{ "answerText": "Concealing insider dealing" }
+			{ "answer": "Concealing insider dealing" }
 		]
 	},
 	{
 		"id": 3,
-		"questionText": "Which of the following can be accepted so as to form a binding contract?",
-		"answerType": "radio",
-		"possibleAnswers": [
-			{ "answerText": "A statement of intent" },
-			{ "answerText": "A quotation of price" },
-			{ "answerText": "An agreement to enter into a future contract" },
-			{ "answerText": "A supply of information", "isCorrect": true }
+		"question": "Which of the following can be accepted so as to form a binding contract?",
+		"type": "radio",
+		"answers": [
+			{ "answer": "A statement of intent" },
+			{ "answer": "A quotation of price" },
+			{ "answer": "An agreement to enter into a future contract" },
+			{ "answer": "A supply of information", "isCorrect": true }
 		]
 	},
 	{
 		"id": 4,
-		"questionText": "Contracts are legally enforceable agreements. Which of the following statements regarding contractual agreements is true?",
-		"answerType": "radio",
-		"possibleAnswers": [
-			{ "answerText": "They must be in writing" },
-			{ "answerText": "They must be evidenced in writing" },
-			{ "answerText": "They need not be in writing", "isCorrect": true }
+		"question": "Contracts are legally enforceable agreements. Which of the following statements regarding contractual agreements is true?",
+		"type": "radio",
+		"answers": [
+			{ "answer": "They must be in writing" },
+			{ "answer": "They must be evidenced in writing" },
+			{ "answer": "They need not be in writing", "isCorrect": true }
 		]
 	},
 	{
 		"id": 5,
-		"questionText": "In relation to the law of negligence, a finding of volenti non fit injuria arises from the action of which of the following?",
-		"answerType": "checkbox",
-		"possibleAnswers": [
-			{ "answerText": "The claimant", "isCorrect": true },
-			{ "answerText": "The respondent", "isCorrect": true },
-			{ "answerText": "An unforeseeable event" },
-			{ "answerText": "A third party" }
+		"question": "In relation to the law of negligence, a finding of volenti non fit injuria arises from the action of which of the following?",
+		"type": "checkbox",
+		"answers": [
+			{ "answer": "The claimant", "isCorrect": true },
+			{ "answer": "The respondent", "isCorrect": true },
+			{ "answer": "An unforeseeable event" },
+			{ "answer": "A third party" }
 		]
 	},
 	{
 		"id": 6,
-		"questionText": "In the context of the law of contract, which TWO of the following statements in relation to a letter of comfort are correct?",
-		"answerType": "checkbox",
-		"possibleAnswers": [
-			{ "answerText": "It is issued by a parent company's bank" },
+		"question": "In the context of the law of contract, which TWO of the following statements in relation to a letter of comfort are correct?",
+		"type": "checkbox",
+		"answers": [
+			{ "answer": "It is issued by a parent company's bank" },
 			{
-				"answerText": "It is issued by a parent company",
+				"answer": "It is issued by a parent company",
 				"isCorrect": true
 			},
 			{
-				"answerText": "It is a non-binding statement of present intention to pay a subsidiary company's future debts",
+				"answer": "It is a non-binding statement of present intention to pay a subsidiary company's future debts",
 				"isCorrect": true
 			},
 			{
-				"answerText": "It is a binding promise to pay a subsidiary company's future debts"
+				"answer": "It is a binding promise to pay a subsidiary company's future debts"
 			}
 		]
 	}
