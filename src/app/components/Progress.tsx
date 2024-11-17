@@ -8,10 +8,10 @@ interface TestAttempt {
 	testType: string;
 	startTime: string;
 	finishTime: string;
-	wrongAnswers: {
+	wrong: {
 		questionId: number;
-		questionText: string;
-		correctAnswer: string[];
+		question: string;
+		answer: string[];
 	}[];
 }
 
@@ -58,11 +58,11 @@ export const Progress = () => {
 					</Text>
 					<Text>Wrong answers:</Text>
 					<List>
-						{attempt.wrongAnswers.map((wrongAnswer, i) => (
+						{attempt.wrong.map((wrongAnswer, i) => (
 							<ListItem key={i}>
-								<Text>Question: {wrongAnswer.questionText}</Text>
+								<Text>Question: {wrongAnswer.question}</Text>
 								<Text c="green">
-									Correct answer: {wrongAnswer.correctAnswer.join(", ")}
+									Correct answer: {wrongAnswer.answer.join(", ")}
 								</Text>
 							</ListItem>
 						))}

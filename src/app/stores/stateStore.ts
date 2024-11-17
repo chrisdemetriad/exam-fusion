@@ -4,7 +4,7 @@ interface AnswerSummary {
 	id: number;
 	question: string;
 	userAnswer: string[];
-	correctAnswer: string[];
+	answer: string[];
 	isCorrect: boolean;
 }
 

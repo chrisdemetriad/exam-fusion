@@ -18,15 +18,15 @@ import { useSession } from "next-auth/react";
 import Timer from "./Timer";
 
 interface Answers {
-	answerText: string;
+	answer: string;
 	isCorrect?: boolean;
 }
 
 interface Question {
 	id: number;
-	questionText: string;
-	answerType: string;
-	possibleAnswers: Answers[];
+	question: string;
+	type: string;
+	answers: Answers[];
 }
 
 interface TestData {
@@ -35,17 +35,17 @@ interface TestData {
 	testType: string;
 	startTime: Date;
 	finishTime: Date;
-	wrongAnswers: {
+	wrong: {
 		questionId: number;
-		questionText: string;
-		correctAnswer: string[];
+		question: string;
+		answer: string[];
 	}[];
 }
 
 const getCorrectAnswers = (question: Question) =>
-	question.possibleAnswers
+	question.answers
 		.filter((answer) => answer.isCorrect)
-		.map((answer) => answer.answerText);
+		.map((answer) => answer.answer);
 
 const isAnswerCorrect = (selectedAnswers: string[], question: Question) => {
 	const correctAnswers = getCorrectAnswers(question);
@@ -157,7 +157,7 @@ export const Questions = () => {
 	const handleAnswerSelect = (selectedValue: string) => {
 		if (feedback.show) return;
 
-		if (currentQuestion.answerType === "checkbox") {
+		if (currentQuestion.type === "checkbox") {
 			setSelectedAnswers((prev) =>
 				prev.includes(selectedValue) ? prev : [...prev, selectedValue],
 			);
@@ -182,9 +182,9 @@ export const Questions = () => {
 
 		addAnswer({
 			id: currentQuestion.id,
-			question: currentQuestion.questionText,
+			question: currentQuestion.question,
 			userAnswer: answers,
-			correctAnswer: getCorrectAnswers(currentQuestion),
+			answer: getCorrectAnswers(currentQuestion),
 			isCorrect: correct,
 		});
 	};
@@ -199,12 +199,12 @@ export const Questions = () => {
 			const finishTime = new Date();
 			const allAnswers = useTestStore.getState().answers;
 
-			const wrongAnswers = allAnswers
+			const wrong = allAnswers
 				.filter((answer) => !answer.isCorrect)
 				.map((answer) => ({
 					questionId: answer.id,
-					questionText: answer.question,
-					correctAnswer: answer.correctAnswer,
+					question: answer.question,
+					answer: answer.answer,
 				}));
 
 			const testData: TestData = {
@@ -213,7 +213,7 @@ export const Questions = () => {
 				testType: provider as string,
 				startTime,
 				finishTime,
-				wrongAnswers,
+				wrong,
 			};
 			await saveTest(testData);
 
@@ -232,19 +232,19 @@ export const Questions = () => {
 			</Group>
 
 			<Text size="md" mb={10}>
-				{currentQuestion.questionText}
+				{currentQuestion.question}
 			</Text>
 
 			<Stack>
-				{currentQuestion.possibleAnswers.map((answer) => {
-					const isSelected = selectedAnswers.includes(answer.answerText);
+				{currentQuestion.answers.map((answer) => {
+					const isSelected = selectedAnswers.includes(answer.answer);
 					const isCorrectAnswer = feedback.show && answer.isCorrect;
 					return (
 						<Card
-							key={answer.answerText}
+							key={answer.answer}
 							shadow="sm"
 							padding="md"
-							onClick={() => handleAnswerSelect(answer.answerText)}
+							onClick={() => handleAnswerSelect(answer.answer)}
 							style={{
 								cursor: feedback.show ? "not-allowed" : "pointer",
 								backgroundColor: isCorrectAnswer
@@ -262,14 +262,14 @@ export const Questions = () => {
 								pointerEvents: feedback.show ? "none" : "auto",
 							}}
 						>
-							{currentQuestion.answerType === "checkbox" ? (
+							{currentQuestion.type === "checkbox" ? (
 								<Checkbox
-									label={answer.answerText}
+									label={answer.answer}
 									checked={isSelected}
-									onChange={() => handleAnswerSelect(answer.answerText)}
+									onChange={() => handleAnswerSelect(answer.answer)}
 								/>
 							) : (
-								<Text>{answer.answerText}</Text>
+								<Text>{answer.answer}</Text>
 							)}
 						</Card>
 					);
@@ -280,7 +280,7 @@ export const Questions = () => {
 				mt="md"
 				onClick={handleNextQuestion}
 				disabled={
-					currentQuestion.answerType === "checkbox"
+					currentQuestion.type === "checkbox"
 						? selectedAnswers.length < 2
 						: selectedAnswers.length === 0
 				}
