@@ -10,6 +10,7 @@ import {
 	Stack,
 	Text,
 	Loader,
+	SegmentedControl,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -30,11 +31,12 @@ interface Question {
 }
 
 interface TestData {
-	_id: string;
+	testId: string;
 	userId: string;
-	testType: string;
 	startTime: Date;
 	finishTime: Date;
+	score: number;
+	number: number;
 	wrong: {
 		questionId: number;
 		question: string;
@@ -57,10 +59,14 @@ const isAnswerCorrect = (selectedAnswers: string[], question: Question) => {
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const saveTest = async (testData: TestData) => {
+const saveTest = async (
+	testData: TestData,
+	provider: string,
+	testId: string,
+) => {
 	try {
 		const response = await fetch(
-			`${baseUrl}/api/v1/tests/${testData.testType}/${testData._id}/attempt`,
+			`${baseUrl}/api/v1/tests/${provider}/${testId}/attempt`,
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -80,6 +86,7 @@ const saveTest = async (testData: TestData) => {
 
 export const Questions = () => {
 	const [questions, setQuestions] = useState<Question[]>([]);
+	const [questionsNumber, setQuestionsNumber] = useState("20");
 	const [loading, setLoading] = useState(true);
 	const [started, setStarted] = useState(false);
 
@@ -107,7 +114,7 @@ export const Questions = () => {
 		const getTests = async () => {
 			try {
 				const response = await fetch(
-					`${baseUrl}/api/v1/tests/${provider}/${testId}`,
+					`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`,
 				);
 				if (!response.ok) {
 					throw new Error("Couldn't get tests");
@@ -123,7 +130,7 @@ export const Questions = () => {
 
 		resetTest();
 		getTests();
-	}, [provider, testId, resetTest]);
+	}, [provider, testId, resetTest, questionsNumber]);
 
 	const handleStartTest = () => {
 		setStarted(true);
@@ -143,10 +150,24 @@ export const Questions = () => {
 				<Text size="xl" mb="md">
 					{provider} Test
 				</Text>
-				<Text mb="md">This test consists of {questions.length} questions.</Text>
+
+				<Text mb="md">
+					There are {questions.length} randomly chosen questions.
+				</Text>
 				<Text mb="md">There is no time limit.</Text>
-				<Text mb="md">Please press "Start" to begin.</Text>
-				<Button onClick={handleStartTest}>Start</Button>
+				<Text mb="md">Choose a test type then press "Start" to begin.</Text>
+
+				<Group>
+					<SegmentedControl
+						value={questionsNumber}
+						onChange={(value) => setQuestionsNumber(value)}
+						data={[
+							{ label: "Long (20 questions)", value: "20" },
+							{ label: "Short (10 questions)", value: "10" },
+						]}
+					/>
+					<Button onClick={handleStartTest}>Start</Button>
+				</Group>
 			</Box>
 		);
 	}
@@ -199,6 +220,12 @@ export const Questions = () => {
 			const finishTime = new Date();
 			const allAnswers = useTestStore.getState().answers;
 
+			const correctAnswersCount = allAnswers.filter(
+				(answer) => answer.isCorrect,
+			).length;
+			const totalQuestions = allAnswers.length;
+			const score = (correctAnswersCount / totalQuestions) * 100;
+
 			const wrong = allAnswers
 				.filter((answer) => !answer.isCorrect)
 				.map((answer) => ({
@@ -208,15 +235,16 @@ export const Questions = () => {
 				}));
 
 			const testData: TestData = {
-				_id: testId as string,
+				testId: testId as string,
 				userId: session?.user?.email || "unknown",
-				testType: provider as string,
 				startTime,
 				finishTime,
+				number: Number(questionsNumber),
+				score,
 				wrong,
 			};
-			await saveTest(testData);
 
+			await saveTest(testData, provider as string, testId as string);
 			router.push("/practice/summary");
 		}
 	};
@@ -250,12 +278,12 @@ export const Questions = () => {
 								backgroundColor: isCorrectAnswer
 									? "beige"
 									: isSelected
-										? "#E0F7FA"
+										? "pink"
 										: "white",
 								borderColor: isCorrectAnswer
 									? "green"
 									: isSelected
-										? "#00ACC1"
+										? "red"
 										: "#e0e0e0",
 								borderWidth: 1,
 								borderStyle: "solid",
