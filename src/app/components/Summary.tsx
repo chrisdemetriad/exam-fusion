@@ -17,11 +17,12 @@ export const Summary = () => {
 		<Box>
 			<Text>Summary</Text>
 			<Text>
-				You've answered {count} questions correctly out of {answers.length} in
+				You've answered {count} questions correctly out of {answers.length} in{" "}
 				{duration} seconds.
 			</Text>
 			<Text>
-				<Link href="/practice">Click here</Link> to start a new test.
+				<Link href="/practice">Click here</Link> to start a new test or take a{" "}
+				<Link href="/practice">similar test</Link> again.
 			</Text>
 			<Accordion multiple defaultValue={expanded}>
 				{answers.map((answer) => (
