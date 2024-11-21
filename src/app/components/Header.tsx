@@ -1,6 +1,7 @@
 "use client";
 import { Box, Container, Group, Text, rem } from "@mantine/core";
 import AuthButton from "./AuthButton";
+import AuthModal from "./AuthModal";
 
 export default function Header() {
 	return (
@@ -40,6 +41,7 @@ export default function Header() {
 					<AuthButton />
 				</Group>
 			</Container>
+			<AuthModal />
 		</header>
 	);
 }

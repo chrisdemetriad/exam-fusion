@@ -1,15 +1,12 @@
 "use client";
-import { Avatar, Button, Modal, Text, rem } from "@mantine/core";
+import { Avatar, Button, Text } from "@mantine/core";
 import type { Session } from "next-auth";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { useTestStore } from "../stores/stateStore";
 
 export default function AuthButton() {
 	const { data: session } = useSession() as { data: Session | null };
-	const [opened, setOpened] = useState(false);
-
-	const openModal = () => setOpened(true);
-	const closeModal = () => setOpened(false);
+	const openModal = useTestStore((state) => state.openModal);
 
 	return session ? (
 		<>
@@ -25,27 +22,8 @@ export default function AuthButton() {
 			</Button>
 		</>
 	) : (
-		<>
-			<Button onClick={openModal} variant="default">
-				Login
-			</Button>
-			<Modal opened={opened} onClose={closeModal} title="Sign in">
-				<Button
-					fullWidth
-					onClick={() => signIn("github", { callbackUrl: "/practice" })}
-					variant="default"
-					style={{ marginBottom: rem(10) }}
-				>
-					Sign in with GitHub
-				</Button>
-				<Button
-					fullWidth
-					onClick={() => signIn("google", { callbackUrl: "/practice" })}
-					variant="default"
-				>
-					Sign in with Google
-				</Button>
-			</Modal>
-		</>
+		<Button onClick={openModal} variant="default">
+			Login
+		</Button>
 	);
 }

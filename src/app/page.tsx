@@ -13,9 +13,14 @@ import {
 } from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
 import Image from "next/image";
+import { useTestStore } from "./stores/stateStore";
+import { useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 
 export default function Home() {
-	return (
+	const { data: session } = useSession() as { data: Session | null };
+	const openModal = useTestStore((state) => state.openModal);
+	return !session ? (
 		<Container size="md">
 			<Box
 				style={{
@@ -90,7 +95,12 @@ export default function Home() {
 					</List>
 
 					<Group mt={30}>
-						<Button radius="xl" size="md" style={{ flex: 1 }}>
+						<Button
+							onClick={openModal}
+							radius="xl"
+							size="md"
+							style={{ flex: 1 }}
+						>
 							Get started
 						</Button>
 					</Group>
@@ -107,5 +117,7 @@ export default function Home() {
 				/>
 			</Box>
 		</Container>
+	) : (
+		<Text>Please choose a test from the sidebar to start!</Text>
 	);
 }
