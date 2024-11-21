@@ -12,6 +12,8 @@ import {
 	Cell,
 	LabelList,
 } from "recharts";
+import { useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -39,11 +41,14 @@ export const Progress = () => {
 
 	const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042"];
 
+	const { data: session } = useSession() as { data: Session | null };
+	const userEmail = session?.user?.email;
+
 	useEffect(() => {
 		const fetchProgress = async () => {
 			try {
 				const response = await fetch(
-					`${baseUrl}/api/v1/tests/progress/alice@demetriad.co.uk`,
+					`${baseUrl}/api/v1/tests/progress/${userEmail}`,
 				);
 				const data: ProgressData[] = await response.json();
 
