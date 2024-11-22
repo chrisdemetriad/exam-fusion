@@ -12,6 +12,7 @@ import {
 	Cell,
 	LabelList,
 } from "recharts";
+import { Text } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import type { Session } from "next-auth";
 
@@ -50,6 +51,14 @@ export const Progress = () => {
 				const response = await fetch(
 					`${baseUrl}/api/v1/tests/progress/${userEmail}`,
 				);
+
+				if (response.status === 204) {
+					console.log("No progress data found for this user");
+					setProgressData([]);
+					setVisibleProviders([]);
+					return;
+				}
+
 				const data: ProgressData[] = await response.json();
 
 				const uniqueProviders = Array.from(
@@ -71,12 +80,21 @@ export const Progress = () => {
 			}
 		};
 		fetchProgress();
-	}, []);
+	}, [userEmail]);
 
 	const filteredData = progressData.filter((item) =>
 		visibleProviders.includes(item.testId.provider),
 	);
-	console.log(filteredData);
+
+	if (progressData.length === 0) {
+		return (
+			<Text c="dimmed">
+				No progress data available for you yet. Start doing some tests first in
+				order to see your progress here!
+			</Text>
+		);
+	}
+
 	const handleLegendClick = (provider: string) => {
 		setVisibleProviders((prev) =>
 			prev.includes(provider)
