@@ -1,4 +1,5 @@
 import { Leaderboard } from "@/app/components/Leaderboard";
+import { PageTitle } from "@/app/components/PageTitle";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -8,5 +9,10 @@ export default async function LeaderboardsRoute(): Promise<JSX.Element> {
 		redirect("/");
 	}
 
-	return <Leaderboard />;
+	return (
+		<>
+			<PageTitle title="Leaderboards" />
+			<Leaderboard />
+		</>
+	);
 }

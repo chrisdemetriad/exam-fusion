@@ -1,5 +1,5 @@
 import { ContactForm } from "@/app/components/ContactForm";
-import { Box } from "@mantine/core";
+import { PageTitle } from "@/app/components/PageTitle";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -10,8 +10,9 @@ export default async function HelpsRoute(): Promise<JSX.Element> {
 	}
 
 	return (
-		<Box>
+		<>
+			<PageTitle title="Help" />
 			<ContactForm />
-		</Box>
+		</>
 	);
 }

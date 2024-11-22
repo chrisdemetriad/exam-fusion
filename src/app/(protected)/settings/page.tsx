@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core";
+import { PageTitle } from "@/app/components/PageTitle";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -8,5 +8,5 @@ export default async function SettingsRoute(): Promise<JSX.Element> {
 		redirect("/");
 	}
 
-	return <Box>Settings</Box>;
+	return <PageTitle title="Settings" />;
 }

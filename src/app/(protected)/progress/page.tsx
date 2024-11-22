@@ -1,3 +1,4 @@
+import { PageTitle } from "@/app/components/PageTitle";
 import { Progress } from "@/app/components/Progress";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -8,5 +9,10 @@ export default async function ProgressRoute(): Promise<JSX.Element> {
 		redirect("/");
 	}
 
-	return <Progress />;
+	return (
+		<>
+			<PageTitle title="Progress" />
+			<Progress />
+		</>
+	);
 }
