@@ -5,7 +5,6 @@ import {
 	Flex,
 	Group,
 	SimpleGrid,
-	Text,
 	TextInput,
 	Textarea,
 } from "@mantine/core";
@@ -29,9 +28,7 @@ export function ContactForm() {
 	return (
 		<Flex justify="flex-start" align="flex-start" direction="row" wrap="wrap">
 			<form onSubmit={form.onSubmit(() => {})}>
-				<Text>Get in touch</Text>
-
-				<SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
+				<SimpleGrid cols={{ base: 1, sm: 2 }} mb="md">
 					<TextInput
 						label="Name"
 						placeholder="Your name"
@@ -51,24 +48,24 @@ export function ContactForm() {
 				<TextInput
 					label="Subject"
 					placeholder="Subject"
-					mt="md"
 					name="subject"
 					variant="filled"
+					mb="md"
 					{...form.getInputProps("subject")}
 				/>
 				<Textarea
-					mt="md"
 					label="Message"
 					placeholder="Your message"
 					maxRows={10}
 					minRows={5}
 					autosize
+					mb="md"
 					name="message"
 					variant="filled"
 					{...form.getInputProps("message")}
 				/>
 
-				<Group justify="center" mt="xl">
+				<Group justify="left">
 					<Button type="submit" size="md">
 						Send message
 					</Button>
