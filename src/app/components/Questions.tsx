@@ -17,6 +17,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useTestStore } from "../stores/stateStore";
 import { useSession } from "next-auth/react";
 import Timer from "./Timer";
+import { PageLoader } from "./Loader";
 
 interface Answers {
 	answer: string;
@@ -137,11 +138,7 @@ export const Questions = () => {
 	};
 
 	if (loading) {
-		return (
-			<Box pos="relative">
-				<Loader color="indigo" size="sm" type="dots" />
-			</Box>
-		);
+		return <PageLoader />;
 	}
 
 	if (!started) {

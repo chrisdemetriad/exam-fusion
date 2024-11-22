@@ -21,6 +21,7 @@ import {
 	IconSearch,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { PageLoader } from "./Loader";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -177,11 +178,7 @@ export const Tests = () => {
 	));
 
 	if (rows.length === 0 || loading) {
-		return (
-			<Box pos="relative">
-				<Loader color="indigo" size="sm" type="dots" />
-			</Box>
-		);
+		<PageLoader />;
 	}
 
 	return (
