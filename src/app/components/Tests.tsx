@@ -122,7 +122,7 @@ export const Tests = () => {
 	useEffect(() => {
 		const fetchTests = async () => {
 			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests`);
+				const response = await fetch(`${baseUrl}/api/v1/tests/all`);
 				const data = await response.json();
 				setTests(data);
 				setSortedData(data);
