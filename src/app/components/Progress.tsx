@@ -15,8 +15,7 @@ import {
 import { Text } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import type { Session } from "next-auth";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useTestStore } from "../stores/stateStore";
 
 interface TestId {
 	provider: string;
@@ -39,7 +38,7 @@ export const Progress = () => {
 	const [providerColors, setProviderColors] = useState<Record<string, string>>(
 		{},
 	);
-
+	const baseUrl = useTestStore((state) => state.baseUrl);
 	const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042"];
 
 	const { data: session } = useSession() as { data: Session | null };

@@ -9,7 +9,6 @@ import {
 	Group,
 	Stack,
 	Text,
-	Loader,
 	SegmentedControl,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
@@ -58,12 +57,11 @@ const isAnswerCorrect = (selectedAnswers: string[], question: Question) => {
 	);
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-
 const saveTest = async (
 	testData: TestData,
 	provider: string,
 	testId: string,
+	baseUrl: string,
 ) => {
 	try {
 		const response = await fetch(
@@ -90,6 +88,7 @@ export const Questions = () => {
 	const [questionsNumber, setQuestionsNumber] = useState("20");
 	const [loading, setLoading] = useState(true);
 	const [started, setStarted] = useState(false);
+	const baseUrl = useTestStore((state) => state.baseUrl);
 
 	const { data: session } = useSession();
 	const router = useRouter();
@@ -241,7 +240,12 @@ export const Questions = () => {
 				wrong,
 			};
 
-			await saveTest(testData, provider as string, testId as string);
+			await saveTest(
+				testData,
+				provider as string,
+				testId as string,
+				baseUrl as string,
+			);
 			router.push("/practice/summary");
 		}
 	};

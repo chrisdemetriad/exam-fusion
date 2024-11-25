@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import { Table, Text, Box, SegmentedControl, Group } from "@mantine/core";
 import { PageLoader } from "./Loader";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useTestStore } from "../stores/stateStore";
 
 interface MostTests {
 	_id: string;
@@ -34,6 +33,8 @@ export const Leaderboard = () => {
 		useState<LeaderboardData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState("mostTests");
+	const baseUrl = useTestStore((state) => state.baseUrl);
+	console.log(baseUrl);
 
 	useEffect(() => {
 		const fetchLeaderboard = async () => {

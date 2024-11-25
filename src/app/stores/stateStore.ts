@@ -12,6 +12,7 @@ interface TestState {
 	answers: AnswerSummary[];
 	duration: number;
 	modalOpen: boolean;
+	baseUrl: string;
 	addAnswer: (answer: AnswerSummary) => void;
 	resetTest: () => void;
 	setDuration: (time: number) => void;
@@ -24,6 +25,9 @@ export const useTestStore = create<TestState>((set) => ({
 	answers: [],
 	duration: 0,
 	modalOpen: false,
+	baseUrl: (process.env.NODE_ENV === "production"
+		? process.env.NEXT_PUBLIC_API_URL_PRODUCTION
+		: process.env.NEXT_PUBLIC_API_URL_LOCAL) as string,
 	addAnswer: (answer) =>
 		set((state) => ({ answers: [...state.answers, answer] })),
 	resetTest: () => set({ answers: [] }),

@@ -11,8 +11,6 @@ import {
 	TextInput,
 	rem,
 	Badge,
-	Box,
-	Loader,
 } from "@mantine/core";
 import {
 	IconSelector,
@@ -22,8 +20,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { PageLoader } from "./Loader";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useTestStore } from "../stores/stateStore";
 
 interface TestData {
 	_id: string;
@@ -116,6 +113,7 @@ export const Tests = () => {
 	const [sortedData, setSortedData] = useState<TestData[]>([]);
 	const [sortBy, setSortBy] = useState<keyof TestData | null>(null);
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
+	const baseUrl = useTestStore((state) => state.baseUrl);
 
 	const router = useRouter();
 
