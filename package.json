@@ -8,7 +8,8 @@
 		"start": "next start",
 		"format": "biome format src",
 		"check": "biome check src",
-		"fix": "biome lint --fix src"
+		"fix": "biome lint --fix src",
+		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.13.3",
