@@ -1,5 +1,5 @@
 import { PageTitle } from "@/app/components/PageTitle";
-// import { Progress } from "@/app/components/Progress";
+import { Progress } from "@/app/components/Progress";
 
 import { getServerSession } from "next-auth";
 
@@ -14,7 +14,7 @@ export default async function ProgressRoute(): Promise<JSX.Element> {
 	return (
 		<>
 			<PageTitle title="Progress" />
-			{/* <Progress /> */}
+			<Progress />
 		</>
 	);
 }
