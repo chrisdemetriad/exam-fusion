@@ -12,7 +12,15 @@
 	"organizeImports": { "enabled": true },
 	"linter": {
 		"enabled": true,
-		"include": ["src/**/*.ts", "src/**/*.tsx"],
+		"include": [
+			"src/**/*.ts",
+			"src/**/*.tsx",
+			"src/**/*.js",
+			"src/**/*.jsx",
+			"src/**/*.css",
+			"src/**/*.scss",
+			"src/**/*.json"
+		],
 		"rules": {
 			"recommended": false,
 			"a11y": { "noBlankTarget": "error" },
