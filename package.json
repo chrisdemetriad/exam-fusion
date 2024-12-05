@@ -9,7 +9,8 @@
 		"format": "biome format src",
 		"check": "biome check src",
 		"fix": "biome lint --fix src",
-		"type-check": "tsc --noEmit"
+		"type-check": "tsc --noEmit",
+		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.13.3",
@@ -36,5 +37,9 @@
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
 		"typescript": "^5"
+	},
+	"packageManager": "pnpm@9.14.0",
+	"engines": {
+		"pnpm": ">=9.12.0 <10"
 	}
 }
