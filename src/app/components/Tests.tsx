@@ -1,11 +1,11 @@
 "use client";
 
-import { type ReactNode, useEffect, useState } from "react";
-import { Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, rem, Badge } from "@mantine/core";
-import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from "@tabler/icons-react";
+import { Badge, Center, Group, ScrollArea, Table, Text, TextInput, UnstyledButton, rem } from "@mantine/core";
+import { IconChevronDown, IconChevronUp, IconSearch, IconSelector } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { PageLoader } from "./Loader";
+import { type ReactNode, useEffect, useState } from "react";
 import { useTestStore } from "../stores/stateStore";
+import { PageLoader } from "./Loader";
 
 interface TestData {
 	_id: string;

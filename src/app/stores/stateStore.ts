@@ -28,8 +28,7 @@ export const useTestStore = create<TestState>((set) => ({
 	baseUrl: (process.env.NODE_ENV === "production"
 		? process.env.NEXT_PUBLIC_API_URL_PRODUCTION
 		: process.env.NEXT_PUBLIC_API_URL_LOCAL) as string,
-	addAnswer: (answer) =>
-		set((state) => ({ answers: [...state.answers, answer] })),
+	addAnswer: (answer) => set((state) => ({ answers: [...state.answers, answer] })),
 	resetTest: () => set({ answers: [] }),
 	setDuration: (time) => set({ duration: time }),
 	resetDuration: () => set({ duration: 0 }),

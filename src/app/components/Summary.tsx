@@ -1,7 +1,7 @@
 "use client";
 
 import { useTestStore } from "@/app/stores/stateStore";
-import { Box, Accordion, Text, ThemeIcon, rem } from "@mantine/core";
+import { Accordion, Box, Text, ThemeIcon, rem } from "@mantine/core";
 import { IconCircleCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 
@@ -17,8 +17,7 @@ export const Summary = () => {
 		<Box>
 			<Text>Summary</Text>
 			<Text>
-				You've answered {count} questions correctly out of {answers.length} in{" "}
-				{duration} seconds.
+				You've answered {count} questions correctly out of {answers.length} in {duration} seconds.
 			</Text>
 			<Text>
 				<Link href="/practice">Click here</Link> to start a new test or take a{" "}
@@ -26,21 +25,12 @@ export const Summary = () => {
 			</Text>
 			<Accordion multiple defaultValue={expanded}>
 				{answers.map((answer) => (
-					<Accordion.Item
-						key={answer.id ?? Math.random()}
-						value={answer.id?.toString() || Math.random().toString()}
-					>
+					<Accordion.Item key={answer.id ?? Math.random()} value={answer.id?.toString() || Math.random().toString()}>
 						<Accordion.Control
 							icon={
-								<ThemeIcon
-									color={answer.isCorrect ? "teal" : "red"}
-									size={24}
-									radius="xl"
-								>
+								<ThemeIcon color={answer.isCorrect ? "teal" : "red"} size={24} radius="xl">
 									{answer.isCorrect ? (
-										<IconCircleCheck
-											style={{ width: rem(16), height: rem(16) }}
-										/>
+										<IconCircleCheck style={{ width: rem(16), height: rem(16) }} />
 									) : (
 										<IconX style={{ width: rem(16), height: rem(16) }} />
 									)}

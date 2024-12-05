@@ -1,10 +1,4 @@
-import {
-	Box,
-	ColorSchemeScript,
-	Flex,
-	MantineProvider,
-	rem,
-} from "@mantine/core";
+import { Box, ColorSchemeScript, Flex, MantineProvider, rem } from "@mantine/core";
 import "@mantine/core/styles.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -51,14 +45,9 @@ export default async function RootLayout({
 			<head>
 				<ColorSchemeScript />
 				<title>{metadata.title?.toString() ?? "Exam Fusion"}</title>
-				<meta
-					name="description"
-					content={metadata.description ?? "Default Description"}
-				/>
+				<meta name="description" content={metadata.description ?? "Default Description"} />
 			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable}`}
-			>
+			<body className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable}`}>
 				<MantineProvider>
 					<SessionProvider session={session}>
 						<Flex direction="column" style={{ height: "100vh" }}>
@@ -67,9 +56,7 @@ export default async function RootLayout({
 							</Box>
 							<Flex style={{ flex: "1 1 auto", overflow: "hidden" }}>
 								{session ? <Navbar /> : null}
-								<main style={{ flex: 1, overflow: "auto", padding: rem(16) }}>
-									{children}
-								</main>
+								<main style={{ flex: 1, overflow: "auto", padding: rem(16) }}>{children}</main>
 							</Flex>
 						</Flex>
 					</SessionProvider>

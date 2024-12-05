@@ -1,7 +1,7 @@
+import { PageTitle } from "@/app/components/PageTitle";
+import { Questions } from "@/app/components/Questions";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { Questions } from "@/app/components/Questions";
-import { PageTitle } from "@/app/components/PageTitle";
 
 export default async function PracticeRoute() {
 	const session = await getServerSession();

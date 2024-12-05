@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Table, Text, Box, SegmentedControl, Group } from "@mantine/core";
-import { PageLoader } from "./Loader";
+import { Box, Group, SegmentedControl, Table, Text } from "@mantine/core";
+import { useEffect, useState } from "react";
 import { useTestStore } from "../stores/stateStore";
+import { PageLoader } from "./Loader";
 
 interface MostTests {
 	_id: string;
@@ -29,8 +29,7 @@ interface LeaderboardData {
 }
 
 export const Leaderboard = () => {
-	const [leaderboardData, setLeaderboardData] =
-		useState<LeaderboardData | null>(null);
+	const [leaderboardData, setLeaderboardData] = useState<LeaderboardData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState("mostTests");
 	const baseUrl = useTestStore((state) => state.baseUrl);
@@ -60,9 +59,7 @@ export const Leaderboard = () => {
 	}
 
 	if (!leaderboardData) {
-		return (
-			<Text c="red">Couldn't get the leaderboard data, please try again.</Text>
-		);
+		return <Text c="red">Couldn't get the leaderboard data, please try again.</Text>;
 	}
 
 	const renderTable = () => {
@@ -124,9 +121,7 @@ export const Leaderboard = () => {
 							{(data as Times[]).map((entry) => (
 								<Table.Tr key={entry._id}>
 									<Table.Td>{entry._id}</Table.Td>
-									<Table.Td>
-										{(entry.averageTime / 1000).toFixed(2)} seconds
-									</Table.Td>
+									<Table.Td>{(entry.averageTime / 1000).toFixed(2)} seconds</Table.Td>
 								</Table.Tr>
 							))}
 						</Table.Tbody>

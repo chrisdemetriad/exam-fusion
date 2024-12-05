@@ -1,13 +1,6 @@
 "use client";
 
-import {
-	Button,
-	Flex,
-	Group,
-	SimpleGrid,
-	TextInput,
-	Textarea,
-} from "@mantine/core";
+import { Button, Flex, Group, SimpleGrid, TextInput, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
 export function ContactForm() {

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { CustomTooltip } from "./Charts/CustomTooltip";
-import { BarChart, Bar, XAxis, Tooltip, Legend, ResponsiveContainer, Cell, LabelList } from "recharts";
 import { Text } from "@mantine/core";
-import { useSession } from "next-auth/react";
 import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { Bar, BarChart, Cell, LabelList, Legend, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import { useTestStore } from "../stores/stateStore";
+import { CustomTooltip } from "./Charts/CustomTooltip";
 
 interface TestId {
 	provider: string;

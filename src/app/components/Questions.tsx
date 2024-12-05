@@ -1,22 +1,12 @@
 "use client";
 
-import {
-	Badge,
-	Box,
-	Button,
-	Card,
-	Checkbox,
-	Group,
-	Stack,
-	Text,
-	SegmentedControl,
-} from "@mantine/core";
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { useTestStore } from "../stores/stateStore";
+import { Badge, Box, Button, Card, Checkbox, Group, SegmentedControl, Stack, Text } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import Timer from "./Timer";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useTestStore } from "../stores/stateStore";
 import { PageLoader } from "./Loader";
+import Timer from "./Timer";
 
 interface Answers {
 	answer: string;
@@ -45,9 +35,7 @@ interface TestData {
 }
 
 const getCorrectAnswers = (question: Question) =>
-	question.answers
-		.filter((answer) => answer.isCorrect)
-		.map((answer) => answer.answer);
+	question.answers.filter((answer) => answer.isCorrect).map((answer) => answer.answer);
 
 const isAnswerCorrect = (selectedAnswers: string[], question: Question) => {
 	const correctAnswers = getCorrectAnswers(question);
@@ -57,26 +45,16 @@ const isAnswerCorrect = (selectedAnswers: string[], question: Question) => {
 	);
 };
 
-const saveTest = async (
-	testData: TestData,
-	provider: string,
-	testId: string,
-	baseUrl: string,
-) => {
+const saveTest = async (testData: TestData, provider: string, testId: string, baseUrl: string) => {
 	try {
-		const response = await fetch(
-			`${baseUrl}/api/v1/tests/${provider}/${testId}/attempt`,
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(testData),
-			},
-		);
+		const response = await fetch(`${baseUrl}/api/v1/tests/${provider}/${testId}/attempt`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(testData),
+		});
 		if (!response.ok) {
 			const errorData = await response.json();
-			throw new Error(
-				`Couldn't save test: ${errorData.message || "Unknown error"}`,
-			);
+			throw new Error(`Couldn't save test: ${errorData.message || "Unknown error"}`);
 		}
 	} catch (error) {
 		console.error("Couldn't save test: ", error);
@@ -113,9 +91,7 @@ export const Questions = () => {
 
 		const getTests = async () => {
 			try {
-				const response = await fetch(
-					`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`,
-				);
+				const response = await fetch(`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`);
 				if (!response.ok) {
 					throw new Error("Couldn't get tests");
 				}
@@ -147,9 +123,7 @@ export const Questions = () => {
 					{provider} Test
 				</Text>
 
-				<Text mb="md">
-					There are {questions.length} randomly chosen questions.
-				</Text>
+				<Text mb="md">There are {questions.length} randomly chosen questions.</Text>
 				<Text mb="md">There is no time limit.</Text>
 				<Text mb="md">Choose a test type then press "Start" to begin.</Text>
 
@@ -175,9 +149,7 @@ export const Questions = () => {
 		if (feedback.show) return;
 
 		if (currentQuestion.type === "checkbox") {
-			setSelectedAnswers((prev) =>
-				prev.includes(selectedValue) ? prev : [...prev, selectedValue],
-			);
+			setSelectedAnswers((prev) => (prev.includes(selectedValue) ? prev : [...prev, selectedValue]));
 
 			const correctAnswers = getCorrectAnswers(currentQuestion);
 			const newSelectedAnswers = selectedAnswers.includes(selectedValue)
@@ -216,9 +188,7 @@ export const Questions = () => {
 			const finishTime = new Date();
 			const allAnswers = useTestStore.getState().answers;
 
-			const correctAnswersCount = allAnswers.filter(
-				(answer) => answer.isCorrect,
-			).length;
+			const correctAnswersCount = allAnswers.filter((answer) => answer.isCorrect).length;
 			const totalQuestions = allAnswers.length;
 			const score = (correctAnswersCount / totalQuestions) * 100;
 
@@ -240,12 +210,7 @@ export const Questions = () => {
 				wrong,
 			};
 
-			await saveTest(
-				testData,
-				provider as string,
-				testId as string,
-				baseUrl as string,
-			);
+			await saveTest(testData, provider as string, testId as string, baseUrl as string);
 			router.push("/practice/summary");
 		}
 	};
@@ -276,16 +241,8 @@ export const Questions = () => {
 							onClick={() => handleAnswerSelect(answer.answer)}
 							style={{
 								cursor: feedback.show ? "not-allowed" : "pointer",
-								backgroundColor: isCorrectAnswer
-									? "beige"
-									: isSelected
-										? "pink"
-										: "white",
-								borderColor: isCorrectAnswer
-									? "green"
-									: isSelected
-										? "red"
-										: "#e0e0e0",
+								backgroundColor: isCorrectAnswer ? "beige" : isSelected ? "pink" : "white",
+								borderColor: isCorrectAnswer ? "green" : isSelected ? "red" : "#e0e0e0",
 								borderWidth: 1,
 								borderStyle: "solid",
 								pointerEvents: feedback.show ? "none" : "auto",
@@ -308,11 +265,7 @@ export const Questions = () => {
 			<Button
 				mt="md"
 				onClick={handleNextQuestion}
-				disabled={
-					currentQuestion.type === "checkbox"
-						? selectedAnswers.length < 2
-						: selectedAnswers.length === 0
-				}
+				disabled={currentQuestion.type === "checkbox" ? selectedAnswers.length < 2 : selectedAnswers.length === 0}
 			>
 				{currentIndex < totalQuestions - 1 ? "Next" : "Finish"}
 			</Button>

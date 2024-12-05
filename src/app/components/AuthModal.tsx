@@ -1,4 +1,4 @@
-import { Modal, Button, rem } from "@mantine/core";
+import { Button, Modal, rem } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { useTestStore } from "../stores/stateStore";
 
@@ -15,11 +15,7 @@ export default function AuthModal() {
 			>
 				Sign in with GitHub
 			</Button>
-			<Button
-				fullWidth
-				onClick={() => signIn("google", { callbackUrl: "/practice" })}
-				variant="default"
-			>
+			<Button fullWidth onClick={() => signIn("google", { callbackUrl: "/practice" })} variant="default">
 				Sign in with Google
 			</Button>
 		</Modal>

@@ -89,10 +89,7 @@ export function Navbar() {
 					borderTop: `${rem(1)} solid #dee2e6`,
 				}}
 			>
-				<Box
-					onClick={() => signOut({ callbackUrl: "/" })}
-					style={INACTIVE_ROUTE}
-				>
+				<Box onClick={() => signOut({ callbackUrl: "/" })} style={INACTIVE_ROUTE}>
 					<IconLogout style={menuItemStyles(false)} stroke={1} />
 					<span>Logout</span>
 				</Box>

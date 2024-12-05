@@ -11,12 +11,7 @@ export default function AuthButton() {
 	return session ? (
 		<>
 			<Text>{session.user?.name}</Text>
-			{session.user?.image && (
-				<Avatar
-					src={session.user.image}
-					alt={session.user.name ?? "User image"}
-				/>
-			)}
+			{session.user?.image && <Avatar src={session.user.image} alt={session.user.name ?? "User image"} />}
 			<Button onClick={() => signOut({ callbackUrl: "/" })} variant="default">
 				Logout
 			</Button>
