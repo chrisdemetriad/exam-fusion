@@ -1,23 +1,8 @@
 "use client";
 
 import { type ReactNode, useEffect, useState } from "react";
-import {
-	Table,
-	ScrollArea,
-	UnstyledButton,
-	Group,
-	Text,
-	Center,
-	TextInput,
-	rem,
-	Badge,
-} from "@mantine/core";
-import {
-	IconSelector,
-	IconChevronDown,
-	IconChevronUp,
-	IconSearch,
-} from "@tabler/icons-react";
+import { Table, ScrollArea, UnstyledButton, Group, Text, Center, TextInput, rem, Badge } from "@mantine/core";
+import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { PageLoader } from "./Loader";
 import { useTestStore } from "../stores/stateStore";
@@ -56,11 +41,7 @@ const styles = {
 };
 
 const TableHeader = ({ children, reversed, sorted, onSort }: TableHeader) => {
-	const Icon = sorted
-		? reversed
-			? IconChevronUp
-			: IconChevronDown
-		: IconSelector;
+	const Icon = sorted ? (reversed ? IconChevronUp : IconChevronDown) : IconSelector;
 	return (
 		<Table.Th style={styles.th}>
 			<UnstyledButton onClick={onSort} style={styles.control}>
@@ -79,15 +60,10 @@ const TableHeader = ({ children, reversed, sorted, onSort }: TableHeader) => {
 
 const filterData = (data: TestData[], search: string) => {
 	const query = search.toLowerCase().trim();
-	return data.filter((item) =>
-		Object.values(item).some((value) => value.toLowerCase().includes(query)),
-	);
+	return data.filter((item) => Object.values(item).some((value) => value.toLowerCase().includes(query)));
 };
 
-const sortData = (
-	data: TestData[],
-	payload: { sortBy: keyof TestData | null; reversed: boolean; search: string },
-) => {
+const sortData = (data: TestData[], payload: { sortBy: keyof TestData | null; reversed: boolean; search: string }) => {
 	const { sortBy } = payload;
 
 	if (!sortBy) {
@@ -99,10 +75,9 @@ const sortData = (
 			if (payload.reversed) {
 				return b[sortBy].localeCompare(a[sortBy]);
 			}
-
 			return a[sortBy].localeCompare(b[sortBy]);
 		}),
-		payload.search,
+		payload.search
 	);
 };
 
@@ -110,6 +85,7 @@ export const Tests = () => {
 	const [tests, setTests] = useState<TestData[]>([]);
 	const [search, setSearch] = useState("");
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 	const [sortedData, setSortedData] = useState<TestData[]>([]);
 	const [sortBy, setSortBy] = useState<keyof TestData | null>(null);
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
@@ -121,18 +97,29 @@ export const Tests = () => {
 		const fetchTests = async () => {
 			try {
 				const response = await fetch(`${baseUrl}/api/v1/tests/all`);
+
+				if (!response.ok) {
+					throw new Error(`Couldn't fetch tests: ${response.statusText}`);
+				}
+
 				const data = await response.json();
+
+				if (!Array.isArray(data)) {
+					throw new Error("Unexpected API response structure.");
+				}
+
 				setTests(data);
 				setSortedData(data);
-			} catch (error) {
+			} catch (error: any) {
 				console.error("Couldn't get tests: ", error);
+				setError(error.message || "Error occurred.");
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		fetchTests();
-	}, []);
+	}, [baseUrl]);
 
 	const setSorting = (field: keyof TestData) => {
 		const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -149,7 +136,7 @@ export const Tests = () => {
 				sortBy,
 				reversed: reverseSortDirection,
 				search: value,
-			}),
+			})
 		);
 	};
 
@@ -157,45 +144,49 @@ export const Tests = () => {
 		router.push(`/practice/${provider}/${id}`);
 	};
 
+	if (loading) {
+		return <PageLoader />;
+	}
+
+	if (error) {
+		return (
+			<ScrollArea>
+				<Text c="red">{error}.</Text>
+			</ScrollArea>
+		);
+	}
+
+	if (sortedData.length === 0) {
+		return (
+			<ScrollArea>
+				<Text c="red">No tests available.</Text>
+			</ScrollArea>
+		);
+	}
+
 	const rows = sortedData.map((test) => (
-		<Table.Tr
-			key={test._id}
-			onClick={() => handleRowClick(test.provider, test._id)}
-			style={{ cursor: "pointer" }}
-		>
+		<Table.Tr key={test._id} onClick={() => handleRowClick(test.provider, test._id)} style={{ cursor: "pointer" }}>
 			<Table.Td>{test.provider}</Table.Td>
 			<Table.Td>
 				<Badge variant="outline" radius="xs">
 					{test.level}
 				</Badge>
 			</Table.Td>
-
 			<Table.Td>{test.title}</Table.Td>
 			<Table.Td>{test.description}</Table.Td>
 		</Table.Tr>
 	));
-
-	if (rows.length === 0 || loading) {
-		<PageLoader />;
-	}
 
 	return (
 		<ScrollArea>
 			<TextInput
 				placeholder="Search by any field"
 				mb="md"
-				leftSection={
-					<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1} />
-				}
+				leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1} />}
 				value={search}
 				onChange={handleSearchChange}
 			/>
-			<Table
-				horizontalSpacing="md"
-				verticalSpacing="xs"
-				miw={700}
-				layout="fixed"
-			>
+			<Table horizontalSpacing="md" verticalSpacing="xs" miw={700} layout="fixed">
 				<Table.Thead>
 					<Table.Tr>
 						<TableHeader
@@ -205,18 +196,10 @@ export const Tests = () => {
 						>
 							Provider
 						</TableHeader>
-						<TableHeader
-							sorted={sortBy === "level"}
-							reversed={reverseSortDirection}
-							onSort={() => setSorting("level")}
-						>
+						<TableHeader sorted={sortBy === "level"} reversed={reverseSortDirection} onSort={() => setSorting("level")}>
 							Level
 						</TableHeader>
-						<TableHeader
-							sorted={sortBy === "title"}
-							reversed={reverseSortDirection}
-							onSort={() => setSorting("title")}
-						>
+						<TableHeader sorted={sortBy === "title"} reversed={reverseSortDirection} onSort={() => setSorting("title")}>
 							Title
 						</TableHeader>
 						<TableHeader
