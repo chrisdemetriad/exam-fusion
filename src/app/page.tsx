@@ -1,6 +1,16 @@
 "use client";
 
-import { Box, Button, Container, Group, List, Text, ThemeIcon, Title, rem } from "@mantine/core";
+import {
+	Box,
+	Button,
+	Container,
+	Group,
+	List,
+	Text,
+	ThemeIcon,
+	Title,
+	rem,
+} from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
@@ -27,7 +37,8 @@ export default function Home() {
 				>
 					<Title
 						style={{
-							color: "light-dark(var(--mantine-color-black), var(--mantine-color-white))",
+							color:
+								"light-dark(var(--mantine-color-black), var(--mantine-color-white))",
 							fontFamily: "Greycliff CF, var(--mantine-font-family)",
 							fontSize: rem(44),
 							lineHeight: 1.2,
@@ -51,8 +62,9 @@ export default function Home() {
 						<br /> practice tests
 					</Title>
 					<Text c="dimmed" mt="md">
-						Our platform offers a comprehensive set of practice tests designed to help you excel in your studies. With a
-						user-friendly interface and diverse question sets, you can practice anytime, anywhere.
+						Our platform offers a comprehensive set of practice tests designed
+						to help you excel in your studies. With a user-friendly interface
+						and diverse question sets, you can practice anytime, anywhere.
 					</Text>
 
 					<List
@@ -61,26 +73,34 @@ export default function Home() {
 						size="sm"
 						icon={
 							<ThemeIcon size={20} radius="xl">
-								<IconCheck style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
+								<IconCheck
+									style={{ width: rem(12), height: rem(12) }}
+									stroke={1.5}
+								/>
 							</ThemeIcon>
 						}
 					>
 						<List.Item>
-							<b>Accessible Anytime</b> – take practice tests at your convenience, without the constraints of location
-							or time.
+							<b>Accessible Anytime</b> – take practice tests at your
+							convenience, without the constraints of location or time.
 						</List.Item>
 						<List.Item>
-							<b>Diverse Question Sets</b> – access a wide variety of questions across multiple subjects and difficulty
-							levels.
+							<b>Diverse Question Sets</b> – access a wide variety of questions
+							across multiple subjects and difficulty levels.
 						</List.Item>
 						<List.Item>
-							<b>Instant Feedback</b> – receive immediate results and performance analytics to help identify strengths
-							and weaknesses.
+							<b>Instant Feedback</b> – receive immediate results and
+							performance analytics to help identify strengths and weaknesses.
 						</List.Item>
 					</List>
 
 					<Group mt={30}>
-						<Button onClick={openModal} radius="xl" size="md" style={{ flex: 1 }}>
+						<Button
+							onClick={openModal}
+							radius="xl"
+							size="md"
+							style={{ flex: 1 }}
+						>
 							Get started
 						</Button>
 					</Group>
