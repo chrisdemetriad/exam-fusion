@@ -1,5 +1,5 @@
-import nodemailer, { TransportOptions } from "nodemailer";
-import { NextRequest } from "next/server";
+import nodemailer, { type TransportOptions } from "nodemailer";
+import type { NextRequest } from "next/server";
 
 interface EmailRequestBody {
 	name: string;
@@ -13,8 +13,19 @@ export async function POST(req: NextRequest): Promise<Response> {
 		const body: EmailRequestBody = await req.json();
 		const { name, email, subject, message } = body;
 
+		const mailOptions = {
+			from: `"EF ${name}" <${process.env.SMTP_USER}>`,
+			to: process.env.SMTP_RECEIVER_EMAIL || "chris@demetriad.co.uk",
+			subject,
+			text: message,
+			replyTo: email,
+		};
+
 		if (!name || !email || !subject || !message) {
-			return new Response(JSON.stringify({ error: "All fields are required" }), { status: 400 });
+			return new Response(
+				JSON.stringify({ error: "All fields are required" }),
+				{ status: 400 },
+			);
 		}
 
 		const transporter = nodemailer.createTransport({
@@ -25,17 +36,29 @@ export async function POST(req: NextRequest): Promise<Response> {
 				user: process.env.SMTP_USER,
 				pass: process.env.SMTP_PASS,
 			},
+			logger: true,
 		} as TransportOptions);
 
-		await transporter.sendMail({
-			from: `"${name} via Exam Fusion" <${process.env.SMTP_USER}>`,
-			to: process.env.SMTP_RECEIVER_EMAIL || "chris@demetriad.co.uk",
-			subject,
-			text: message,
-			replyTo: email,
-		});
+		try {
+			await transporter.verify();
+			console.log("SMTP connection is alright");
+		} catch (error) {
+			console.log("SMTP connection not really working", error);
+			return new Response(
+				JSON.stringify({
+					error: "SMTP connection not really working",
+					details: (error as Error).message,
+				}),
+				{ status: 500 },
+			);
+		}
 
-		return new Response(JSON.stringify({ success: "The message has been sent successfully" }), { status: 200 });
+		await transporter.sendMail(mailOptions);
+
+		return new Response(
+			JSON.stringify({ success: "The message has been sent successfully" }),
+			{ status: 200 },
+		);
 	} catch (error: unknown) {
 		console.error("Couldn't send the email", error);
 
@@ -44,7 +67,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 				error: "Couldn't send the email",
 				details: (error as Error).message,
 			}),
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
