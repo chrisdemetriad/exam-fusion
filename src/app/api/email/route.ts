@@ -14,7 +14,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 		const { name, email, subject, message } = body;
 
 		const mailOptions = {
-			from: `"EF ${name}" <${process.env.SMTP_USER}>`,
+			from: process.env.SMTP_RECEIVER_EMAIL || "chris@demetriad.co.uk",
 			to: process.env.SMTP_RECEIVER_EMAIL || "chris@demetriad.co.uk",
 			subject,
 			text: message,
@@ -22,10 +22,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 		};
 
 		if (!name || !email || !subject || !message) {
-			return new Response(
-				JSON.stringify({ error: "All fields are required" }),
-				{ status: 400 },
-			);
+			return new Response(JSON.stringify({ error: "All fields are required" }), { status: 400 });
 		}
 
 		const transporter = nodemailer.createTransport({
@@ -49,16 +46,13 @@ export async function POST(req: NextRequest): Promise<Response> {
 					error: "SMTP connection not really working",
 					details: (error as Error).message,
 				}),
-				{ status: 500 },
+				{ status: 500 }
 			);
 		}
 
 		await transporter.sendMail(mailOptions);
 
-		return new Response(
-			JSON.stringify({ success: "The message has been sent successfully" }),
-			{ status: 200 },
-		);
+		return new Response(JSON.stringify({ success: "The message has been sent successfully" }), { status: 200 });
 	} catch (error: unknown) {
 		console.error("Couldn't send the email", error);
 
@@ -67,7 +61,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 				error: "Couldn't send the email",
 				details: (error as Error).message,
 			}),
-			{ status: 500 },
+			{ status: 500 }
 		);
 	}
 }
