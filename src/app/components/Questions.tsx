@@ -50,22 +50,6 @@ const isAnswerCorrect = (selectedAnswers: string[], question: Question) => {
 	);
 };
 
-const saveTest = async (testData: TestData, provider: string, testId: string, baseUrl: string) => {
-	try {
-		const response = await fetch(`${baseUrl}/api/v1/tests/${provider}/${testId}/attempt`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(testData),
-		});
-		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(`Couldn't save test: ${errorData.message || "Unknown error"}`);
-		}
-	} catch (error) {
-		console.error("Couldn't save test: ", error);
-	}
-};
-
 export const Questions = () => {
 	const [questionsNumber, setQuestionsNumber] = useState("20");
 	const [started, setStarted] = useState(false);
@@ -99,6 +83,22 @@ export const Questions = () => {
 	}, [provider, testId, resetTest]);
 
 	const handleStartTest = () => setStarted(true);
+
+	const handleSaveTest = async (testData: TestData) => {
+		try {
+			const response = await fetch(`${baseUrl}/api/v1/tests/${provider}/${testId}/attempt`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(testData),
+			});
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(`Couldn't save the test: ${errorData.message || "Error"}`);
+			}
+		} catch (err) {
+			console.error(`Couldn't save the test: ${err}`);
+		}
+	};
 
 	if (loading) return <PageLoader />;
 	if (error) return <Text>Error: {error}</Text>;
@@ -195,7 +195,7 @@ export const Questions = () => {
 				wrong,
 			};
 
-			await saveTest(testData, provider as string, testId as string, baseUrl as string);
+			await handleSaveTest(testData);
 			router.push("/practice/summary");
 		}
 	};
