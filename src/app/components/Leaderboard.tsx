@@ -1,9 +1,10 @@
 "use client";
 
 import { Box, Group, SegmentedControl, Table, Text } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTestStore } from "../stores/stateStore";
 import { PageLoader } from "./Loader";
+import { useFetch } from "../hooks/useFetch";
 
 interface MostTests {
 	_id: string;
@@ -29,33 +30,17 @@ interface LeaderboardData {
 }
 
 export const Leaderboard = () => {
-	const [leaderboardData, setLeaderboardData] = useState<LeaderboardData | null>(null);
-	const [loading, setLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState("mostTests");
 	const baseUrl = useTestStore((state) => state.baseUrl);
-	console.log(baseUrl);
 
-	useEffect(() => {
-		const fetchLeaderboard = async () => {
-			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests/leaderboard`);
-				if (!response.ok) {
-					throw new Error("Couldn't fetch leaderboard data");
-				}
-				const data = await response.json();
-				setLeaderboardData(data);
-			} catch (error) {
-				console.error("Couldn't fetch leaderboard data", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchLeaderboard();
-	}, []);
+	const { data: leaderboardData, error, loading } = useFetch<LeaderboardData>(`${baseUrl}/api/v1/tests/leaderboard`);
 
 	if (loading) {
 		return <PageLoader />;
+	}
+
+	if (error) {
+		return <Text c="red">{error}</Text>;
 	}
 
 	if (!leaderboardData) {

@@ -9,11 +9,11 @@ export const useFetch = <T = unknown>(url: string) => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const res = await fetch(url);
-				if (!res.ok) {
-					throw new Error(`Couldn't get the data ${res.statusText}`);
+				const respose = await fetch(url);
+				if (!respose.ok) {
+					throw new Error(`Couldn't fetch the data ${respose.statusText}`);
 				}
-				const data = (await res.json()) as T;
+				const data = (await respose.json()) as T;
 
 				setData(data);
 			} catch (error) {
