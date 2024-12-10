@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useTestStore } from "../stores/stateStore";
 import { PageLoader } from "./Loader";
 import Timer from "./Timer";
+import { useFetch } from "../hooks/useFetch";
 
 interface Answers {
 	answer: string;
@@ -62,9 +63,7 @@ const saveTest = async (testData: TestData, provider: string, testId: string, ba
 };
 
 export const Questions = () => {
-	const [questions, setQuestions] = useState<Question[]>([]);
 	const [questionsNumber, setQuestionsNumber] = useState("20");
-	const [loading, setLoading] = useState(true);
 	const [started, setStarted] = useState(false);
 	const baseUrl = useTestStore((state) => state.baseUrl);
 
@@ -75,6 +74,9 @@ export const Questions = () => {
 	const addAnswer = useTestStore((state) => state.addAnswer);
 	const resetTest = useTestStore((state) => state.resetTest);
 
+	const { data, error, loading } = useFetch(`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`);
+
+	const questions = data?.questions || [];
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 	const [feedback, setFeedback] = useState<{
@@ -87,34 +89,13 @@ export const Questions = () => {
 	const startTime = new Date();
 
 	useEffect(() => {
-		if (!provider || !testId) return;
+		if (provider && testId) resetTest();
+	}, [provider, testId, resetTest]);
 
-		const getTests = async () => {
-			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`);
-				if (!response.ok) {
-					throw new Error("Couldn't get tests");
-				}
-				const data = await response.json();
-				setQuestions(data.questions);
-			} catch (error) {
-				console.log((error as Error).message);
-			} finally {
-				setLoading(false);
-			}
-		};
+	const handleStartTest = () => setStarted(true);
 
-		resetTest();
-		getTests();
-	}, [provider, testId, resetTest, questionsNumber]);
-
-	const handleStartTest = () => {
-		setStarted(true);
-	};
-
-	if (loading) {
-		return <PageLoader />;
-	}
+	if (loading) return <PageLoader />;
+	if (error) return <Text>Error: {error}</Text>;
 
 	if (!started) {
 		return (
@@ -122,11 +103,9 @@ export const Questions = () => {
 				<Text size="xl" mb="md">
 					{provider} Test
 				</Text>
-
 				<Text mb="md">There are {questions.length} randomly chosen questions.</Text>
 				<Text mb="md">There is no time limit.</Text>
 				<Text mb="md">Choose a test type then press "Start" to begin.</Text>
-
 				<Group>
 					<SegmentedControl
 						value={questionsNumber}
@@ -230,7 +209,7 @@ export const Questions = () => {
 			</Text>
 
 			<Stack>
-				{currentQuestion.answers.map((answer) => {
+				{currentQuestion.answers.map((answer: Answers) => {
 					const isSelected = selectedAnswers.includes(answer.answer);
 					const isCorrectAnswer = feedback.show && answer.isCorrect;
 					return (
