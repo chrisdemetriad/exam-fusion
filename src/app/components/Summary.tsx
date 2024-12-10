@@ -4,6 +4,7 @@ import { useTestStore } from "@/app/stores/stateStore";
 import { Accordion, Box, Text, ThemeIcon, rem } from "@mantine/core";
 import { IconCircleCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
+import { PageTitle } from "./PageTitle";
 
 export const Summary = () => {
 	const answers = useTestStore((state) => state.answers);
@@ -15,13 +16,12 @@ export const Summary = () => {
 
 	return (
 		<Box>
-			<Text>Summary</Text>
-			<Text>
+			<PageTitle title="Summary" />
+			<Text mb={20}>
 				You've answered {count} questions correctly out of {answers.length} in {duration} seconds.
 			</Text>
-			<Text>
-				<Link href="/practice">Click here</Link> to start a new test or take a{" "}
-				<Link href="/practice">similar test</Link> again.
+			<Text mb={20}>
+				<Link href="/practice">Click here</Link> to start a new test.
 			</Text>
 			<Accordion multiple defaultValue={expanded}>
 				{answers.map((answer) => (
