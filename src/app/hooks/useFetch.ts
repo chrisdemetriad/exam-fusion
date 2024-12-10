@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Question } from "../components/Questions";
 
-export const useFetch = (url: string) => {
-	const [data, setData] = useState<Question[]>([]);
+export const useFetch = <T = unknown>(url: string) => {
+	const [data, setData] = useState<T | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(true);
 

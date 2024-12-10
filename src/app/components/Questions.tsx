@@ -35,6 +35,10 @@ interface TestData {
 	}[];
 }
 
+interface QuestionsResponse {
+	questions: Question[];
+}
+
 const getCorrectAnswers = (question: Question) =>
 	question.answers.filter((answer) => answer.isCorrect).map((answer) => answer.answer);
 
@@ -74,7 +78,9 @@ export const Questions = () => {
 	const addAnswer = useTestStore((state) => state.addAnswer);
 	const resetTest = useTestStore((state) => state.resetTest);
 
-	const { data, error, loading } = useFetch(`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`);
+	const { data, error, loading } = useFetch<QuestionsResponse>(
+		`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`
+	);
 
 	const questions = data?.questions || [];
 	const [currentIndex, setCurrentIndex] = useState(0);
