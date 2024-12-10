@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useState } from "react";
 import { useTestStore } from "../stores/stateStore";
 import { PageLoader } from "./Loader";
+import { useFetch } from "../hooks/useFetch";
 
 interface TestData {
 	_id: string;
@@ -84,8 +85,6 @@ const sortData = (data: TestData[], payload: { sortBy: keyof TestData | null; re
 export const Tests = () => {
 	const [tests, setTests] = useState<TestData[]>([]);
 	const [search, setSearch] = useState("");
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
 	const [sortedData, setSortedData] = useState<TestData[]>([]);
 	const [sortBy, setSortBy] = useState<keyof TestData | null>(null);
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
@@ -93,33 +92,17 @@ export const Tests = () => {
 
 	const router = useRouter();
 
+	const { data, error, loading } = useFetch<TestData[]>(`${baseUrl}/api/v1/tests/all`);
+
 	useEffect(() => {
-		const fetchTests = async () => {
-			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests/all`);
+		if (data) {
+			setTests(data);
+		}
+	}, [data]);
 
-				if (!response.ok) {
-					throw new Error(`Couldn't fetch tests: ${response.statusText}`);
-				}
-
-				const data = await response.json();
-
-				if (!Array.isArray(data)) {
-					throw new Error("Unexpected API response structure.");
-				}
-
-				setTests(data);
-				setSortedData(data);
-			} catch (error: any) {
-				console.error("Couldn't get tests: ", error);
-				setError(error.message || "Error occurred.");
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchTests();
-	}, [baseUrl]);
+	useEffect(() => {
+		setSortedData(sortData(tests, { sortBy, reversed: reverseSortDirection, search }));
+	}, [tests, sortBy, reverseSortDirection, search]);
 
 	const setSorting = (field: keyof TestData) => {
 		const reversed = field === sortBy ? !reverseSortDirection : false;

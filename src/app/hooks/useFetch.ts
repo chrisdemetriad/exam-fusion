@@ -11,12 +11,13 @@ export const useFetch = <T = unknown>(url: string) => {
 			try {
 				const res = await fetch(url);
 				if (!res.ok) {
-					throw new Error("Couldn't get the data");
+					throw new Error(`Couldn't get the data ${res.statusText}`);
 				}
-				const data = await res.json();
+				const data = (await res.json()) as T;
+
 				setData(data);
-			} catch (err) {
-				setError((err as Error).message);
+			} catch (error) {
+				setError((error as Error).message);
 			} finally {
 				setLoading(false);
 			}
