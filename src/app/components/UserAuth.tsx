@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Box, Button, Text } from "@mantine/core";
 import type { Session } from "next-auth";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useTestStore } from "../stores/stateStore";
 
 export default function AuthButton() {
@@ -18,9 +18,6 @@ export default function AuthButton() {
 					<Image src={session.user.image} alt={session.user.name ?? "User image"} width={38} height={38} priority />
 				</Box>
 			)}
-			<Button onClick={() => signOut({ callbackUrl: "/" })} variant="default">
-				Logout
-			</Button>
 		</>
 	) : (
 		<Button onClick={openModal} variant="default">
