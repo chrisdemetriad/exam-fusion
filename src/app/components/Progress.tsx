@@ -3,10 +3,13 @@
 import { Text, Box } from "@mantine/core";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { Bar, BarChart, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, LineChart, Line, LabelList } from "recharts";
 import { useTestStore } from "../stores/stateStore";
 import { CustomTooltip } from "./Charts/CustomTooltip";
+import { useFetch } from "../hooks/useFetch";
+import { useState, useEffect } from "react";
+import { PageLoader } from "./Loader";
+import Link from "next/link";
 
 interface TestId {
 	provider: string;
@@ -31,7 +34,6 @@ interface CustomLegendPayload {
 }
 
 export const Progress = () => {
-	const [progressData, setProgressData] = useState<ProgressData[]>([]);
 	const [visibleProviders, setVisibleProviders] = useState<string[]>([]);
 	const [providerColors, setProviderColors] = useState<Record<string, string>>({});
 	const baseUrl = useTestStore((state) => state.baseUrl);
@@ -40,46 +42,45 @@ export const Progress = () => {
 	const { data: session } = useSession() as { data: Session | null };
 	const userEmail = session?.user?.email;
 
+	const {
+		data: progressData,
+		loading,
+		error,
+	} = useFetch<ProgressData[]>(`${baseUrl}/api/v1/tests/progress/${userEmail}`);
+
 	useEffect(() => {
-		const fetchProgress = async () => {
-			try {
-				const response = await fetch(`${baseUrl}/api/v1/tests/progress/${userEmail}`);
+		if (progressData) {
+			const uniqueProviders = Array.from(new Set(progressData.map((item) => item.testId.provider)));
+			const providerColorMap = uniqueProviders.reduce(
+				(acc, provider, index) => {
+					acc[provider] = colors[index % colors.length];
+					return acc;
+				},
+				{} as Record<string, string>
+			);
 
-				if (response.status === 204) {
-					console.log("No progress data found for this user");
-					setProgressData([]);
-					setVisibleProviders([]);
-					return;
-				}
+			setProviderColors(providerColorMap);
+			setVisibleProviders(uniqueProviders);
+		}
+	}, [progressData]);
+	const filteredData = progressData?.filter((item) => visibleProviders.includes(item.testId.provider)) || [];
 
-				const data: ProgressData[] = await response.json();
+	if (loading) return <PageLoader />;
 
-				const uniqueProviders = Array.from(new Set(data.map((item) => item.testId.provider)));
-				const providerColorMap = uniqueProviders.reduce(
-					(acc, provider, index) => {
-						acc[provider] = colors[index % colors.length];
-						return acc;
-					},
-					{} as Record<string, string>
-				);
+	if (error) {
+		return <Text c="red">{error}</Text>;
+	}
 
-				setProviderColors(providerColorMap);
-				setVisibleProviders(uniqueProviders);
-				setProgressData(data);
-			} catch (error) {
-				console.error("Error fetching progress data:", error);
-			}
-		};
-		fetchProgress();
-	}, [userEmail]);
-
-	const filteredData = progressData.filter((item) => visibleProviders.includes(item.testId.provider));
-
-	if (progressData.length === 0) {
+	if (!progressData || progressData.length === 0) {
 		return (
-			<Text c="dimmed">
-				No progress data available for you yet. Start doing some tests first in order to see your progress here!
-			</Text>
+			<>
+				<Text c="dimmed" mb={20}>
+					No progress data available for you yet.
+				</Text>
+				<Text>
+					<Link href="/practice">Click here</Link> to start a test in order to see your progress here!
+				</Text>
+			</>
 		);
 	}
 
@@ -159,9 +160,7 @@ export const Progress = () => {
 			<Box style={{ width: "100%", height: 300, marginBottom: "2rem" }}>
 				<ResponsiveContainer>
 					<LineChart data={averageScores} margin={{ left: 10, right: 10 }}>
-						{/* <CartesianGrid strokeDasharray="3 3" /> */}
 						<XAxis dataKey="provider" padding={{ left: 10, right: 10 }} tickMargin={10} />
-						{/* <YAxis /> */}
 						<Tooltip />
 						<Line type="monotone" dataKey="averageScore" stroke="#8884d8" />
 					</LineChart>
