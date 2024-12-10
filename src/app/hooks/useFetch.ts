@@ -9,11 +9,15 @@ export const useFetch = <T = unknown>(url: string) => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const respose = await fetch(url);
-				if (!respose.ok) {
-					throw new Error(`Couldn't fetch the data ${respose.statusText}`);
+				const response = await fetch(url);
+				if (response.status === 204) {
+					setData(null);
+					return;
 				}
-				const data = (await respose.json()) as T;
+				if (!response.ok) {
+					throw new Error(`Couldn't fetch the data: ${response.statusText}`);
+				}
+				const data = (await response.json()) as T;
 
 				setData(data);
 			} catch (error) {
