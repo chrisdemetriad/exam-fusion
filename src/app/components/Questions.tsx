@@ -122,7 +122,9 @@ export const Questions = () => {
 							{ label: "Short (10 questions)", value: "10" },
 						]}
 					/>
-					<Button onClick={handleStartTest}>Start</Button>
+					<Button onClick={handleStartTest} variant="outline">
+						Start
+					</Button>
 				</Group>
 			</Box>
 		);
@@ -231,10 +233,10 @@ export const Questions = () => {
 								cursor: feedback.show ? "not-allowed" : "pointer",
 								backgroundColor: isCorrectAnswer ? "beige" : isSelected ? "pink" : "inherit",
 								borderColor: isCorrectAnswer ? "green" : isSelected ? "red" : "#e0e0e0",
-								color: isCorrectAnswer ? "green" : isSelected ? "red" : null,
 								borderWidth: 1,
 								borderStyle: "solid",
 								pointerEvents: feedback.show ? "none" : "auto",
+								...(isCorrectAnswer ? { color: "green" } : isSelected ? { color: "#333" } : {}),
 							}}
 						>
 							{currentQuestion.type === "checkbox" ? (

@@ -72,16 +72,9 @@ export function Navbar() {
 	return (
 		<>
 			<Box style={{ flex: 1 }}>{links}</Box>
-			<Box
-				style={{
-					paddingTop: rem(16),
-					borderTop: `${rem(1)} solid #dee2e6`,
-				}}
-			>
-				<Box onClick={() => signOut({ callbackUrl: "/" })} style={INACTIVE_ROUTE}>
-					<IconLogout style={menuItemStyles(false)} stroke={1} />
-					<span>Logout</span>
-				</Box>
+			<Box onClick={() => signOut({ callbackUrl: "/" })} style={INACTIVE_ROUTE}>
+				<IconLogout style={menuItemStyles(false)} stroke={1} />
+				<span>Logout</span>
 			</Box>
 		</>
 	);

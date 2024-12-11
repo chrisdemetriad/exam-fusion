@@ -113,7 +113,7 @@ export function ContactForm() {
 						/>
 
 						<Group justify="left">
-							<Button type="submit" size="md">
+							<Button variant="outline" type="submit" size="md">
 								Send message
 							</Button>
 						</Group>
