@@ -2,6 +2,7 @@
 import { Box, Container, Group, Text, rem } from "@mantine/core";
 import UserAuth from "@components/UserAuth";
 import UserAuthModal from "@components/UserAuthModal";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Header() {
 	return (
@@ -32,6 +33,7 @@ export default function Header() {
 				</Box>
 				<Group>
 					<UserAuth />
+					<ThemeToggle />
 				</Group>
 			</Container>
 			<UserAuthModal />

@@ -18,7 +18,6 @@ const BASE_ROUTE = {
 	display: "flex",
 	alignItems: "center",
 	textDecoration: "none",
-	fontSize: rem(14),
 	padding: rem(10),
 	borderRadius: rem(5),
 	fontWeight: 500,

@@ -28,7 +28,7 @@ export default function Home() {
 					<Title
 						style={{
 							color: "light-dark(var(--mantine-color-black), var(--mantine-color-white))",
-							fontFamily: "Greycliff CF, var(--mantine-font-family)",
+							fontFamily: "Mulish, sans-serif",
 							fontSize: rem(44),
 							lineHeight: 1.2,
 							fontWeight: 900,
@@ -38,7 +38,8 @@ export default function Home() {
 						}}
 					>
 						Your{" "}
-						<span
+						<Box
+							component="span"
 							style={{
 								position: "relative",
 								backgroundColor: "var(--mantine-color-blue-light)",
@@ -47,7 +48,7 @@ export default function Home() {
 							}}
 						>
 							free
-						</span>{" "}
+						</Box>
 						<br /> practice tests
 					</Title>
 					<Text c="dimmed" mt="md">

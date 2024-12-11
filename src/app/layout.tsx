@@ -4,10 +4,10 @@ import type { Metadata } from "next";
 import { Comfortaa, Mulish } from "next/font/google";
 import type React from "react";
 import "./globals.css";
-// import '@mantine/dates/styles.css';
 import { getServerSession } from "next-auth";
 import SessionProvider from "@components/SessionProvider";
 import MainLayout from "@components/MainLayout";
+import { theme } from "./theme";
 
 const comfortaa = Comfortaa({
 	weight: ["400", "700"],
@@ -44,7 +44,7 @@ export default async function RootLayout({
 				<meta name="description" content={metadata.description || "Practice questions for accountants"} />
 			</head>
 			<body>
-				<MantineProvider>
+				<MantineProvider theme={theme} defaultColorScheme="light">
 					<SessionProvider session={session}>
 						<MainLayout children={children} />
 					</SessionProvider>
