@@ -1,7 +1,7 @@
 "use client";
 
 import { useTestStore } from "@/app/stores/stateStore";
-import { Accordion, Box, Text, ThemeIcon, rem } from "@mantine/core";
+import { Accordion, Box, Button, Group, Text, ThemeIcon, rem } from "@mantine/core";
 import { IconCircleCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { PageTitle } from "@components/PageTitle";
@@ -17,12 +17,15 @@ export const Summary = () => {
 	return (
 		<Box>
 			<PageTitle title="Summary" />
-			<Text mb={20}>
-				You've answered {count} questions correctly out of {answers.length} in {duration} seconds.
-			</Text>
-			<Text mb={20}>
-				<Link href="/practice">Click here</Link> to start a new test.
-			</Text>
+			<Group justify="space-between" mb={20}>
+				<Text>
+					You've answered {count} questions correctly out of {answers.length} in {duration} seconds.
+				</Text>
+				<Button variant="outline">
+					<Link href="/practice">New test</Link>
+				</Button>
+			</Group>
+
 			<Accordion multiple defaultValue={expanded}>
 				{answers.map((answer) => (
 					<Accordion.Item key={answer.id ?? Math.random()} value={answer.id?.toString() || Math.random().toString()}>
