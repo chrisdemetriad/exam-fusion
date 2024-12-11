@@ -4,11 +4,11 @@ import { Text, Box } from "@mantine/core";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { Bar, BarChart, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, LineChart, Line, LabelList } from "recharts";
-import { useTestStore } from "../stores/stateStore";
-import { CustomTooltip } from "./Charts/CustomTooltip";
-import { useFetch } from "../hooks/useFetch";
+import { useTestStore } from "@stores/stateStore";
+import { CustomTooltip } from "@components/Charts/CustomTooltip";
+import { useFetch } from "@hooks/useFetch";
 import { useState, useEffect } from "react";
-import { PageLoader } from "./Loader";
+import { PageLoader } from "@components/Loader";
 import Link from "next/link";
 
 interface TestId {

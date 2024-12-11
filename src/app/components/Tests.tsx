@@ -4,9 +4,9 @@ import { Badge, Center, Group, ScrollArea, Table, Text, TextInput, UnstyledButto
 import { IconChevronDown, IconChevronUp, IconSearch, IconSelector } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useState } from "react";
-import { useTestStore } from "../stores/stateStore";
-import { PageLoader } from "./Loader";
-import { useFetch } from "../hooks/useFetch";
+import { useTestStore } from "@stores/stateStore";
+import { PageLoader } from "@components/Loader";
+import { useFetch } from "@hooks/useFetch";
 
 export interface TestData {
 	_id: string;

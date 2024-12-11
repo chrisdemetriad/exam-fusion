@@ -2,9 +2,9 @@
 
 import { AppShell, Box, Burger, Group, rem } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import Header from "./Header";
-import { Navbar } from "./NavBar";
-import { useTestStore } from "../stores/stateStore";
+import Header from "@components/Header";
+import { Navbar } from "@components/NavBar";
+import { useTestStore } from "@stores/stateStore";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
 	const { data: session } = useSession();

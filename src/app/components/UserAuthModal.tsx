@@ -1,6 +1,6 @@
 import { Button, Modal, rem } from "@mantine/core";
 import { signIn } from "next-auth/react";
-import { useTestStore } from "../stores/stateStore";
+import { useTestStore } from "@stores/stateStore";
 
 export default function UserAuthModal() {
 	const closeModal = useTestStore((state) => state.closeModal);

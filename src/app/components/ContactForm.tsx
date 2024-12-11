@@ -3,7 +3,7 @@
 import { Button, Flex, Group, SimpleGrid, TextInput, Textarea, Text, Box } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
-import { PageLoader } from "./Loader";
+import { PageLoader } from "@components/Loader";
 
 interface FormValues {
 	name: string;

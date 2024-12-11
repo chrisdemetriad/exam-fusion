@@ -4,10 +4,10 @@ import { Badge, Box, Button, Card, Checkbox, Group, SegmentedControl, Stack, Tex
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useTestStore } from "../stores/stateStore";
-import { PageLoader } from "./Loader";
-import Timer from "./Timer";
-import { useFetch } from "../hooks/useFetch";
+import { useTestStore } from "@stores/stateStore";
+import { PageLoader } from "@components/Loader";
+import Timer from "@components/Timer";
+import { useFetch } from "@hooks/useFetch";
 
 interface Answers {
 	answer: string;

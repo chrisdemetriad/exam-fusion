@@ -2,9 +2,9 @@
 
 import { Box, Group, SegmentedControl, Table, Text } from "@mantine/core";
 import { useState } from "react";
-import { useTestStore } from "../stores/stateStore";
-import { PageLoader } from "./Loader";
-import { useFetch } from "../hooks/useFetch";
+import { useTestStore } from "@stores/stateStore";
+import { PageLoader } from "@components/Loader";
+import { useFetch } from "@hooks/useFetch";
 
 interface MostTests {
 	_id: string;

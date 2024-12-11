@@ -1,7 +1,7 @@
 "use client";
 
 import { Text } from "@mantine/core";
-import { useTestStore } from "../stores/stateStore";
+import { useTestStore } from "@stores/stateStore";
 
 interface PageTitle {
 	title: string;

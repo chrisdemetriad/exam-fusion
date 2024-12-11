@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { TestData } from "../components/Tests";
+import { TestData } from "@components/Tests";
 
 interface AnswerSummary {
 	id: number;

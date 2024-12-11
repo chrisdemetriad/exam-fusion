@@ -1,7 +1,7 @@
 "use client";
 import { Box, Container, Group, Text, rem } from "@mantine/core";
-import UserAuth from "./UserAuth";
-import UserAuthModal from "./UserAuthModal";
+import UserAuth from "@components/UserAuth";
+import UserAuthModal from "@components/UserAuthModal";
 
 export default function Header() {
 	return (

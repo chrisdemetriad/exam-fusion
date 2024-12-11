@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTestStore } from "../stores/stateStore";
+import { useTestStore } from "@stores/stateStore";
 
 const Timer = () => {
 	const [localTime, setLocalTime] = useState(0);

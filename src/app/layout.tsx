@@ -6,8 +6,8 @@ import type React from "react";
 import "./globals.css";
 // import '@mantine/dates/styles.css';
 import { getServerSession } from "next-auth";
-import SessionProvider from "./components/SessionProvider";
-import MainLayout from "./components/MainLayout";
+import SessionProvider from "@components/SessionProvider";
+import MainLayout from "@components/MainLayout";
 
 const comfortaa = Comfortaa({
 	weight: ["400", "700"],

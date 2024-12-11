@@ -4,7 +4,7 @@ import { useTestStore } from "@/app/stores/stateStore";
 import { Accordion, Box, Text, ThemeIcon, rem } from "@mantine/core";
 import { IconCircleCheck, IconX } from "@tabler/icons-react";
 import Link from "next/link";
-import { PageTitle } from "./PageTitle";
+import { PageTitle } from "@components/PageTitle";
 
 export const Summary = () => {
 	const answers = useTestStore((state) => state.answers);
