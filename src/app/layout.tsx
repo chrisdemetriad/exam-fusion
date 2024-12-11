@@ -1,4 +1,4 @@
-import { Box, ColorSchemeScript, Flex, MantineProvider, rem } from "@mantine/core";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import type { Metadata } from "next";
 import { Comfortaa, Mulish } from "next/font/google";
@@ -6,9 +6,8 @@ import type React from "react";
 import "./globals.css";
 // import '@mantine/dates/styles.css';
 import { getServerSession } from "next-auth";
-import Header from "./components/Header";
-import { Navbar } from "./components/NavBar";
 import SessionProvider from "./components/SessionProvider";
+import MainLayout from "./components/MainLayout";
 
 const comfortaa = Comfortaa({
 	weight: ["400", "700"],
@@ -47,15 +46,7 @@ export default async function RootLayout({
 			<body>
 				<MantineProvider>
 					<SessionProvider session={session}>
-						<Flex direction="column" style={{ height: "100vh" }}>
-							<Box style={{ flex: "0 0 56px" }}>
-								<Header />
-							</Box>
-							<Flex style={{ flex: "1 1 auto", overflow: "hidden" }}>
-								{session && <Navbar />}
-								<main style={{ flex: 1, overflow: "auto", padding: rem(16) }}>{children}</main>
-							</Flex>
-						</Flex>
+						<MainLayout children={children} />
 					</SessionProvider>
 				</MantineProvider>
 			</body>

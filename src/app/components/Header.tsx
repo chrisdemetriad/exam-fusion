@@ -5,17 +5,10 @@ import UserAuthModal from "./UserAuthModal";
 
 export default function Header() {
 	return (
-		<header
-			style={{
-				height: "56px",
-				backgroundColor: "#fff",
-				borderBottom: "1px solid #dee2e6",
-			}}
-		>
+		<>
 			<Container
 				size="xxl"
 				style={{
-					height: "56px",
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
@@ -42,6 +35,6 @@ export default function Header() {
 				</Group>
 			</Container>
 			<UserAuthModal />
-		</header>
+		</>
 	);
 }

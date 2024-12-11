@@ -71,21 +71,11 @@ export function Navbar() {
 	));
 
 	return (
-		<nav
-			style={{
-				width: rem(250),
-				padding: rem(16),
-				display: "flex",
-				flexDirection: "column",
-				borderRight: `${rem(1)} solid #dee2e6`,
-			}}
-		>
+		<>
 			<Box style={{ flex: 1 }}>{links}</Box>
-
 			<Box
 				style={{
 					paddingTop: rem(16),
-					marginTop: rem(16),
 					borderTop: `${rem(1)} solid #dee2e6`,
 				}}
 			>
@@ -94,6 +84,6 @@ export function Navbar() {
 					<span>Logout</span>
 				</Box>
 			</Box>
-		</nav>
+		</>
 	);
 }
