@@ -16,6 +16,8 @@ interface TestState {
 	modalOpen: boolean;
 	baseUrl: string;
 	currentTest: TestData | null;
+	navbarOpen: boolean;
+	toggleNavbar: () => void;
 	addAnswer: (answer: AnswerSummary) => void;
 	resetTest: () => void;
 	setDuration: (time: number) => void;
@@ -35,6 +37,8 @@ export const useTestStore = create<TestState>()(
 				? process.env.NEXT_PUBLIC_API_URL_PRODUCTION
 				: process.env.NEXT_PUBLIC_API_URL_LOCAL) as string,
 			currentTest: null,
+			navbarOpen: true,
+			toggleNavbar: () => set((state) => ({ navbarOpen: !state.navbarOpen })),
 			addAnswer: (answer) => set((state) => ({ answers: [...state.answers, answer] })),
 			resetTest: () => set({ answers: [] }),
 			setDuration: (time) => set({ duration: time }),
@@ -45,7 +49,11 @@ export const useTestStore = create<TestState>()(
 		}),
 		{
 			name: "test-store",
-			partialize: (state) => ({ answers: state.answers, currentTest: state.currentTest }),
+			partialize: (state) => ({
+				answers: state.answers,
+				currentTest: state.currentTest,
+				navbarOpen: state.navbarOpen,
+			}),
 		}
 	)
 );

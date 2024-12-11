@@ -90,11 +90,9 @@ export const Tests = () => {
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
 	const baseUrl = useTestStore((state) => state.baseUrl);
 	const setSelectedTest = useTestStore((state) => state.setCurrentTest);
-
 	const router = useRouter();
 
 	const { data, error, loading } = useFetch<TestData[]>(`${baseUrl}/api/v1/tests/all`);
-
 	useEffect(() => {
 		if (data) {
 			setTests(data);
