@@ -8,7 +8,7 @@ import { useTestStore } from "../stores/stateStore";
 import { PageLoader } from "./Loader";
 import { useFetch } from "../hooks/useFetch";
 
-interface TestData {
+export interface TestData {
 	_id: string;
 	provider: string;
 	level: string;
@@ -89,6 +89,7 @@ export const Tests = () => {
 	const [sortBy, setSortBy] = useState<keyof TestData | null>(null);
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
 	const baseUrl = useTestStore((state) => state.baseUrl);
+	const setSelectedTest = useTestStore((state) => state.setCurrentTest);
 
 	const router = useRouter();
 
@@ -123,8 +124,9 @@ export const Tests = () => {
 		);
 	};
 
-	const handleRowClick = (provider: string, id: string) => {
-		router.push(`/practice/${provider}/${id}`);
+	const handleRowClick = (test: TestData) => {
+		setSelectedTest(test);
+		router.push(`/practice/${test.provider}/${test._id}`);
 	};
 
 	if (loading) {
@@ -148,15 +150,15 @@ export const Tests = () => {
 	}
 
 	const rows = sortedData.map((test) => (
-		<Table.Tr key={test._id} onClick={() => handleRowClick(test.provider, test._id)} style={{ cursor: "pointer" }}>
+		<Table.Tr key={test._id} onClick={() => handleRowClick(test)} style={{ cursor: "pointer" }}>
 			<Table.Td>{test.provider}</Table.Td>
+			<Table.Td>{test.title}</Table.Td>
+			<Table.Td>{test.description}</Table.Td>
 			<Table.Td>
 				<Badge variant="outline" radius="xs">
 					{test.level}
 				</Badge>
 			</Table.Td>
-			<Table.Td>{test.title}</Table.Td>
-			<Table.Td>{test.description}</Table.Td>
 		</Table.Tr>
 	));
 
@@ -179,9 +181,7 @@ export const Tests = () => {
 						>
 							Provider
 						</TableHeader>
-						<TableHeader sorted={sortBy === "level"} reversed={reverseSortDirection} onSort={() => setSorting("level")}>
-							Level
-						</TableHeader>
+
 						<TableHeader sorted={sortBy === "title"} reversed={reverseSortDirection} onSort={() => setSorting("title")}>
 							Title
 						</TableHeader>
@@ -191,6 +191,9 @@ export const Tests = () => {
 							onSort={() => setSorting("description")}
 						>
 							Description
+						</TableHeader>
+						<TableHeader sorted={sortBy === "level"} reversed={reverseSortDirection} onSort={() => setSorting("level")}>
+							Level
 						</TableHeader>
 					</Table.Tr>
 				</Table.Thead>

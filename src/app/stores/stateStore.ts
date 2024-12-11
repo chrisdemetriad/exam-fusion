@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { TestData } from "../components/Tests";
 
 interface AnswerSummary {
 	id: number;
@@ -13,12 +14,14 @@ interface TestState {
 	duration: number;
 	modalOpen: boolean;
 	baseUrl: string;
+	currentTest: TestData | null;
 	addAnswer: (answer: AnswerSummary) => void;
 	resetTest: () => void;
 	setDuration: (time: number) => void;
 	resetDuration: () => void;
 	openModal: () => void;
 	closeModal: () => void;
+	setCurrentTest: (test: TestData) => void;
 }
 
 export const useTestStore = create<TestState>((set) => ({
@@ -28,10 +31,12 @@ export const useTestStore = create<TestState>((set) => ({
 	baseUrl: (process.env.NODE_ENV === "production"
 		? process.env.NEXT_PUBLIC_API_URL_PRODUCTION
 		: process.env.NEXT_PUBLIC_API_URL_LOCAL) as string,
+	currentTest: null,
 	addAnswer: (answer) => set((state) => ({ answers: [...state.answers, answer] })),
 	resetTest: () => set({ answers: [] }),
 	setDuration: (time) => set({ duration: time }),
 	resetDuration: () => set({ duration: 0 }),
 	openModal: () => set({ modalOpen: true }),
 	closeModal: () => set({ modalOpen: false }),
+	setCurrentTest: (test) => set({ currentTest: test }),
 }));

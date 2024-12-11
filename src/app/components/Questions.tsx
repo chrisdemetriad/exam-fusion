@@ -54,6 +54,7 @@ export const Questions = () => {
 	const [questionsNumber, setQuestionsNumber] = useState("20");
 	const [started, setStarted] = useState(false);
 	const baseUrl = useTestStore((state) => state.baseUrl);
+	const currentTest = useTestStore((state) => state.currentTest);
 
 	const { data: session } = useSession();
 	const router = useRouter();
@@ -106,8 +107,8 @@ export const Questions = () => {
 	if (!started) {
 		return (
 			<Box>
-				<Text size="xl" mb="md">
-					{provider} Test
+				<Text size="xl" mb={40}>
+					{provider} - {currentTest?.description}
 				</Text>
 				<Text mb="md">There are {questions.length} randomly chosen questions.</Text>
 				<Text mb="md">There is no time limit.</Text>
@@ -202,8 +203,10 @@ export const Questions = () => {
 
 	return (
 		<Box>
-			<Group mb={20} justify="space-between">
-				<h3>{provider} Test Questions</h3>
+			<Group mb={40} justify="space-between">
+				<Text size="xl">
+					{provider} - {currentTest?.description}
+				</Text>
 				<Timer />
 				<Badge variant="outline" radius="sm">
 					Question {currentIndex + 1} out of {totalQuestions}
