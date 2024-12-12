@@ -25,14 +25,12 @@ interface ProgressData {
 	testDate: string;
 	duration: number;
 }
+import { useMemo } from "react";
 
 export const Progress = () => {
-	const [visibleProviders, setVisibleProviders] = useState<string[]>([]);
-	const [providerColors, setProviderColors] = useState<Record<string, string>>({});
 	const baseUrl = useTestStore((state) => state.baseUrl);
-	const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#ffcc00", "#00c49f"];
-
 	const [limit, setLimit] = useState(10);
+	const [visibleProviders, setVisibleProviders] = useState<string[]>([]);
 
 	const { data: session } = useSession() as { data: Session | null };
 	const userEmail = session?.user?.email;
@@ -43,28 +41,26 @@ export const Progress = () => {
 		error,
 	} = useFetch<ProgressData[]>(`${baseUrl}/api/v1/tests/progress/${userEmail}?limit=${limit}`);
 
+	const uniqueProviders = useMemo(() => {
+		if (!progressData) return [];
+		return progressData.reduce((acc, item) => {
+			if (!acc.includes(item.testId.provider)) {
+				acc.push(item.testId.provider);
+			}
+			return acc;
+		}, [] as string[]);
+	}, [progressData]);
+
 	useEffect(() => {
 		if (progressData) {
-			const uniqueProviders = Array.from(new Set(progressData.map((item) => item.testId.provider)));
-			const providerColorMap = uniqueProviders.reduce(
-				(acc, provider, index) => {
-					acc[provider] = colors[index % colors.length];
-					return acc;
-				},
-				{} as Record<string, string>
-			);
-
-			setProviderColors(providerColorMap);
 			setVisibleProviders(uniqueProviders);
 		}
-	}, [progressData]);
+	}, [progressData, uniqueProviders]);
+
 	const filteredData = progressData?.filter((item) => visibleProviders.includes(item.testId.provider)) || [];
 
-	if (loading) return <PageLoader />;
-
-	if (error) {
-		return <Text c="red">{error}</Text>;
-	}
+	if (loading) <PageLoader />;
+	if (error) <Text c="red">{error}</Text>;
 
 	if (!progressData || progressData.length === 0) {
 		return (
@@ -87,11 +83,18 @@ export const Progress = () => {
 		}
 	};
 
-	const averageScores = Object.keys(providerColors).map((provider) => {
+	const averageScores = uniqueProviders.map((provider) => {
 		const providerData = progressData.filter((item) => item.testId.provider === provider);
 		const averageScore = providerData.reduce((sum, entry) => sum + (entry.score ?? 0), 0) / providerData.length || 0;
 		return { provider, averageScore };
 	});
+
+	const providerColours: { [key: string]: string } = {
+		ACCA: "cornflowerblue",
+		AAT: "darkkhaki",
+		ACA: "lightpink",
+		CIMA: "darkolivegreen",
+	};
 
 	return (
 		<Box>
@@ -119,41 +122,30 @@ export const Progress = () => {
 							style={{ fontSize: "10px" }}
 						/>
 						<Tooltip content={<CustomTooltip />} />
-						{Object.keys(providerColors).map((provider) => (
-							<Bar
-								key={provider}
-								dataKey={(entry) => (entry.testId.provider === provider ? entry.score : null)}
-								fill={providerColors[provider]}
-								stackId="provider"
-							>
-								{filteredData.map((entry, index) => (
-									<Cell
-										key={`cell-${index}`}
-										fill={
-											entry.testId.provider === provider && (entry.score === 0 || entry.score === null)
-												? "red"
-												: providerColors[provider]
-										}
-									/>
-								))}
-								<LabelList
-									dataKey={(entry) => (entry as ProgressData).testId.provider}
-									position="insideBottom"
-									style={{ fontSize: "10px", fill: "#fff" }}
-								/>
-							</Bar>
-						))}
+						<Bar dataKey={(entry) => entry.score} stackId="provider">
+							{filteredData.map((entry, index) => {
+								const barColor = providerColours[entry.testId.provider] || "#8884d8";
+								return (
+									<Cell key={`cell-${index}`} fill={entry.score === 0 || entry.score === null ? "gray" : barColor} />
+								);
+							})}
+							<LabelList
+								dataKey={(entry) => (entry as ProgressData).testId.provider}
+								position="insideBottom"
+								style={{ fontSize: "10px", fill: "#000", background: "red" }}
+							/>
+						</Bar>
 						<Legend
 							layout="horizontal"
 							align="center"
 							verticalAlign="top"
-							payload={Object.keys(providerColors).map((provider) => ({
+							payload={uniqueProviders.map((provider) => ({
 								id: provider,
 								value: provider,
 								type: "square",
-								color: visibleProviders.includes(provider) ? providerColors[provider] : "#d3d3d3",
+								color: visibleProviders.includes(provider) ? providerColours[provider] : "#d3d3d3",
 							}))}
-							onClick={(data, index, event) => {
+							onClick={(data) => {
 								if (data?.id) {
 									handleLegendClick(data.id);
 								}
