@@ -119,15 +119,18 @@ export const Leaderboard = () => {
 
 	return (
 		<Box>
-			<SegmentedControl
-				value={selectedCategory}
-				onChange={setSelectedCategory}
-				data={[
-					{ label: "Most Tests Taken", value: "mostTests" },
-					{ label: "Scores", value: "scores" },
-					{ label: "Times", value: "times" },
-				]}
-			/>
+			<Group justify="end">
+				<SegmentedControl
+					size="md"
+					value={selectedCategory}
+					onChange={setSelectedCategory}
+					data={[
+						{ label: "Most Tests Taken", value: "mostTests" },
+						{ label: "Scores", value: "scores" },
+						{ label: "Times", value: "times" },
+					]}
+				/>
+			</Group>
 
 			<Group>{renderTable()}</Group>
 		</Box>

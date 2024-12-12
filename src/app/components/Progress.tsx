@@ -1,6 +1,6 @@
 "use client";
 
-import { Text, Box } from "@mantine/core";
+import { Text, Box, SegmentedControl, Group } from "@mantine/core";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { Bar, BarChart, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, LineChart, Line, LabelList } from "recharts";
@@ -32,12 +32,13 @@ interface CustomLegendPayload {
 	type: string;
 	color: string;
 }
-
 export const Progress = () => {
 	const [visibleProviders, setVisibleProviders] = useState<string[]>([]);
 	const [providerColors, setProviderColors] = useState<Record<string, string>>({});
 	const baseUrl = useTestStore((state) => state.baseUrl);
 	const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#ffcc00", "#00c49f"];
+
+	const [limit, setLimit] = useState(10);
 
 	const { data: session } = useSession() as { data: Session | null };
 	const userEmail = session?.user?.email;
@@ -46,7 +47,7 @@ export const Progress = () => {
 		data: progressData,
 		loading,
 		error,
-	} = useFetch<ProgressData[]>(`${baseUrl}/api/v1/tests/progress/${userEmail}`);
+	} = useFetch<ProgressData[]>(`${baseUrl}/api/v1/tests/progress/${userEmail}?limit=${limit}`);
 
 	useEffect(() => {
 		if (progressData) {
@@ -100,7 +101,19 @@ export const Progress = () => {
 
 	return (
 		<Box>
-			<Text>Daily progress</Text>
+			<Group justify="space-between" mb={20}>
+				<Text>Daily progress</Text>
+				<SegmentedControl
+					size="md"
+					value={limit.toString()}
+					onChange={(value: string) => setLimit(Number(value))}
+					data={[
+						{ label: "Last 10 tests", value: "10" },
+						{ label: "Last 20 tests", value: "20" },
+					]}
+				/>
+			</Group>
+
 			<Box style={{ width: "100%", height: 400, marginBottom: "2rem" }}>
 				<ResponsiveContainer>
 					<BarChart data={filteredData} margin={{ bottom: 80 }}>
