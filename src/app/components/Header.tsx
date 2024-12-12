@@ -25,7 +25,7 @@ export default function Header() {
 							color: "darkorchid",
 						}}
 					>
-						Exam
+						<Box component="span">Exam</Box>
 						<Box component="span" style={{ color: "blueviolet" }}>
 							Fusion
 						</Box>

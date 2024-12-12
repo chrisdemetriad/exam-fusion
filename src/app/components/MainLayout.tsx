@@ -3,7 +3,7 @@
 import { AppShell, Box, Burger, Group, rem } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import Header from "@components/Header";
-import { Navbar } from "@components/NavBar";
+import { NavBar } from "@components/NavBar";
 import { useTestStore } from "@stores/stateStore";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -38,7 +38,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 			</AppShell.Header>
 			{session && (
 				<AppShell.Navbar p="md">
-					<Navbar />
+					<NavBar />
 				</AppShell.Navbar>
 			)}
 			<AppShell.Main>
