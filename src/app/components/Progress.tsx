@@ -3,13 +3,13 @@
 import { Text, Box, SegmentedControl, Group } from "@mantine/core";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-import { Bar, BarChart, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, LineChart, Line, LabelList } from "recharts";
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, LineChart, Line, LabelList } from "recharts";
 import { useTestStore } from "@stores/stateStore";
 import { CustomTooltip } from "@components/Charts/CustomTooltip";
 import { useFetch } from "@hooks/useFetch";
 import { useState, useEffect } from "react";
 import { PageLoader } from "@components/Loader";
-import Link from "next/link";
+import { BarChartLegend } from "@components/BarChartLegend";
 
 interface TestId {
 	provider: string;
@@ -26,6 +26,7 @@ interface ProgressData {
 	duration: number;
 }
 import { useMemo } from "react";
+import Link from "next/link";
 
 export const Progress = () => {
 	const baseUrl = useTestStore((state) => state.baseUrl);
@@ -59,8 +60,8 @@ export const Progress = () => {
 
 	const filteredData = progressData?.filter((item) => visibleProviders.includes(item.testId.provider)) || [];
 
-	if (loading) <PageLoader />;
-	if (error) <Text c="red">{error}</Text>;
+	if (loading) return <PageLoader />;
+	if (error) return <Text c="red">{error}</Text>;
 
 	if (!progressData || progressData.length === 0) {
 		return (
@@ -75,16 +76,12 @@ export const Progress = () => {
 		);
 	}
 
-	const handleLegendClick = (provider?: string) => {
-		if (provider) {
-			setVisibleProviders((prev) =>
-				prev.includes(provider) ? prev.filter((p) => p !== provider) : [...prev, provider]
-			);
-		}
+	const handleLegendClick = (provider: string) => {
+		setVisibleProviders((prev) => (prev.includes(provider) ? prev.filter((p) => p !== provider) : [...prev, provider]));
 	};
 
 	const averageScores = uniqueProviders.map((provider) => {
-		const providerData = progressData.filter((item) => item.testId.provider === provider);
+		const providerData = (progressData || ([] as ProgressData[])).filter((item) => item.testId.provider === provider);
 		const averageScore = providerData.reduce((sum, entry) => sum + (entry.score ?? 0), 0) / providerData.length || 0;
 		return { provider, averageScore };
 	});
@@ -111,6 +108,13 @@ export const Progress = () => {
 				/>
 			</Group>
 
+			<BarChartLegend
+				uniqueProviders={uniqueProviders}
+				visibleProviders={visibleProviders}
+				onProviderToggle={handleLegendClick}
+				providerColours={providerColours}
+			/>
+
 			<Box style={{ width: "100%", height: 400, marginBottom: "2rem" }}>
 				<ResponsiveContainer>
 					<BarChart data={filteredData} margin={{ bottom: 80 }}>
@@ -135,22 +139,6 @@ export const Progress = () => {
 								style={{ fontSize: "10px", fill: "#000", background: "red" }}
 							/>
 						</Bar>
-						<Legend
-							layout="horizontal"
-							align="center"
-							verticalAlign="top"
-							payload={uniqueProviders.map((provider) => ({
-								id: provider,
-								value: provider,
-								type: "square",
-								color: visibleProviders.includes(provider) ? providerColours[provider] : "#d3d3d3",
-							}))}
-							onClick={(data) => {
-								if (data?.id) {
-									handleLegendClick(data.id);
-								}
-							}}
-						/>
 					</BarChart>
 				</ResponsiveContainer>
 			</Box>
