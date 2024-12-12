@@ -26,12 +26,6 @@ interface ProgressData {
 	duration: number;
 }
 
-interface CustomLegendPayload {
-	id?: string;
-	value: any;
-	type: string;
-	color: string;
-}
 export const Progress = () => {
 	const [visibleProviders, setVisibleProviders] = useState<string[]>([]);
 	const [providerColors, setProviderColors] = useState<Record<string, string>>({});
