@@ -3,10 +3,10 @@ import { signIn } from "next-auth/react";
 import { useTestStore } from "@stores/stateStore";
 
 export default function UserAuthModal() {
-	const closeModal = useTestStore((state) => state.closeModal);
-	const modalOpen = useTestStore((state) => state.modalOpen);
+	const closeAuthModal = useTestStore((state) => state.closeAuthModal);
+	const authModalOpen = useTestStore((state) => state.authModalOpen);
 	return (
-		<Modal opened={modalOpen} onClose={closeModal} title="Sign in">
+		<Modal opened={authModalOpen} onClose={closeAuthModal} title="Sign in">
 			<Button
 				fullWidth
 				onClick={() => signIn("github", { callbackUrl: "/practice" })}

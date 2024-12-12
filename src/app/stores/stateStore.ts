@@ -13,7 +13,8 @@ interface AnswerSummary {
 interface TestState {
 	answers: AnswerSummary[];
 	duration: number;
-	modalOpen: boolean;
+	authModalOpen: boolean;
+	reportModalOpen: boolean;
 	baseUrl: string;
 	currentTest: TestData | null;
 	navbarOpen: boolean;
@@ -22,8 +23,10 @@ interface TestState {
 	resetTest: () => void;
 	setDuration: (time: number) => void;
 	resetDuration: () => void;
-	openModal: () => void;
-	closeModal: () => void;
+	openAuthModal: () => void;
+	closeAuthModal: () => void;
+	openReportModal: () => void;
+	closeReportModal: () => void;
 	setCurrentTest: (test: TestData) => void;
 }
 
@@ -32,7 +35,8 @@ export const useTestStore = create<TestState>()(
 		(set) => ({
 			answers: [],
 			duration: 0,
-			modalOpen: false,
+			authModalOpen: false,
+			reportModalOpen: false,
 			baseUrl: (process.env.NODE_ENV === "production"
 				? process.env.NEXT_PUBLIC_API_URL_PRODUCTION
 				: process.env.NEXT_PUBLIC_API_URL_LOCAL) as string,
@@ -43,9 +47,11 @@ export const useTestStore = create<TestState>()(
 			resetTest: () => set({ answers: [] }),
 			setDuration: (time) => set({ duration: time }),
 			resetDuration: () => set({ duration: 0 }),
-			openModal: () => set({ modalOpen: true }),
-			closeModal: () => set({ modalOpen: false }),
+			openAuthModal: () => set({ authModalOpen: true }),
+			closeAuthModal: () => set({ authModalOpen: false }),
 			setCurrentTest: (test) => set({ currentTest: test }),
+			openReportModal: () => set({ reportModalOpen: true }),
+			closeReportModal: () => set({ reportModalOpen: false }),
 		}),
 		{
 			name: "test-store",

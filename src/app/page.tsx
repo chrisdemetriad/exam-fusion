@@ -9,7 +9,7 @@ import { useTestStore } from "@stores/stateStore";
 
 export default function Home() {
 	const { data: session } = useSession() as { data: Session | null };
-	const openModal = useTestStore((state) => state.openModal);
+	const openAuthModal = useTestStore((state) => state.openAuthModal);
 	return !session ? (
 		<Container size="md">
 			<Box
@@ -81,7 +81,7 @@ export default function Home() {
 					</List>
 
 					<Group mt={30}>
-						<Button onClick={openModal} radius="xl" size="md" style={{ flex: 1 }}>
+						<Button onClick={openAuthModal} radius="xl" size="md" style={{ flex: 1 }}>
 							Get started
 						</Button>
 					</Group>

@@ -8,7 +8,7 @@ import { useTestStore } from "@stores/stateStore";
 
 export default function AuthButton() {
 	const { data: session } = useSession() as { data: Session | null };
-	const openModal = useTestStore((state) => state.openModal);
+	const openAuthModal = useTestStore((state) => state.openAuthModal);
 
 	return session ? (
 		<>
@@ -20,8 +20,6 @@ export default function AuthButton() {
 			)}
 		</>
 	) : (
-		<Button onClick={openModal} variant="default">
-			Login
-		</Button>
+		<Button onClick={openAuthModal}>Login</Button>
 	);
 }

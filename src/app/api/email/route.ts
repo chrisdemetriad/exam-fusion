@@ -1,28 +1,35 @@
 import nodemailer, { type TransportOptions } from "nodemailer";
 import type { NextRequest } from "next/server";
+import { Question } from "@/app/components/Questions";
 
 interface EmailRequestBody {
-	name: string;
-	email: string;
+	name?: string;
+	email?: string;
 	subject: string;
 	message: string;
+	question?: Question;
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
 	try {
 		const body: EmailRequestBody = await req.json();
-		const { name, email, subject, message } = body;
+		const { name, email, subject, message, question } = body;
 
 		const mailOptions = {
 			from: process.env.SMTP_RECEIVER_EMAIL || "chris@demetriad.co.uk",
 			to: process.env.SMTP_RECEIVER_EMAIL || "chris@demetriad.co.uk",
 			subject,
-			text: message,
-			replyTo: email,
+			text: `From ${name ? name : "ExamFusion"},\n\n${message}\n\n${question ? `Question:\n${JSON.stringify(question, null, 2)}` : ""}`,
+			replyTo: email || process.env.SMTP_RECEIVER_EMAIL,
 		};
 
-		if (!name || !email || !subject || !message) {
-			return new Response(JSON.stringify({ error: "All fields are required" }), { status: 400 });
+		if (!subject || !message || (!question && (!name || !email))) {
+			return new Response(
+				JSON.stringify({
+					error: question ? "Subject and message are required" : "Name, email, subject, and message are required",
+				}),
+				{ status: 400 }
+			);
 		}
 
 		const transporter = nodemailer.createTransport({

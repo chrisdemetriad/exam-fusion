@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Box, Button, Card, Checkbox, Group, SegmentedControl, Stack, Text } from "@mantine/core";
+import { Badge, Box, Button, Card, Checkbox, Group, rem, SegmentedControl, Stack, Text, Tooltip } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,13 +8,15 @@ import { useTestStore } from "@stores/stateStore";
 import { PageLoader } from "@components/Loader";
 import Timer from "@components/Timer";
 import { useFetch } from "@hooks/useFetch";
+import { IconMessageQuestion } from "@tabler/icons-react";
+import { QuestionReportModal } from "./QuestionReportModal";
 
 interface Answers {
 	answer: string;
 	isCorrect?: boolean;
 }
 
-interface Question {
+export interface Question {
 	id: number;
 	question: string;
 	type: string;
@@ -62,6 +64,7 @@ export const Questions = () => {
 	const { provider, testId } = params;
 	const addAnswer = useTestStore((state) => state.addAnswer);
 	const resetTest = useTestStore((state) => state.resetTest);
+	const openReportModal = useTestStore((state) => state.openReportModal);
 
 	const { data, error, loading } = useFetch<QuestionsResponse>(
 		`${baseUrl}/api/v1/tests/${provider}/${testId}?limit=${questionsNumber}`
@@ -253,13 +256,22 @@ export const Questions = () => {
 				})}
 			</Stack>
 
-			<Button
-				mt="md"
-				onClick={handleNextQuestion}
-				disabled={currentQuestion.type === "checkbox" ? selectedAnswers.length < 2 : selectedAnswers.length === 0}
-			>
-				{currentIndex < totalQuestions - 1 ? "Next" : "Finish"}
-			</Button>
+			<Group justify="space-between" mt="md">
+				<Button
+					variant="outline"
+					onClick={handleNextQuestion}
+					disabled={currentQuestion.type === "checkbox" ? selectedAnswers.length < 2 : selectedAnswers.length === 0}
+				>
+					{currentIndex < totalQuestions - 1 ? "Next" : "Finish"}
+				</Button>
+
+				<Tooltip arrowSize={8} label="Report question" withArrow position="top">
+					<Box onClick={openReportModal}>
+						<IconMessageQuestion style={{ cursor: "pointer", color: "gray", width: rem(24), height: rem(24) }} />
+					</Box>
+				</Tooltip>
+				<QuestionReportModal question={currentQuestion} />
+			</Group>
 		</Box>
 	);
 };

@@ -1,32 +1,33 @@
 "use client";
 
-import { Button, Flex, Group, SimpleGrid, TextInput, Textarea, Text, Box } from "@mantine/core";
+import { Button, Group, TextInput, Textarea, Text, Box, Modal } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { PageLoader } from "@components/Loader";
+import { useTestStore } from "../stores/stateStore";
+import { Question } from "@components/Questions";
 
 interface FormValues {
-	name: string;
-	email: string;
 	subject: string;
 	message: string;
+	question: Question;
 }
 
-export function ContactForm() {
+export function QuestionReportModal({ question }: { question: Question }) {
+	const closeReportModal = useTestStore((state) => state.closeReportModal);
+	const reportModalOpen = useTestStore((state) => state.reportModalOpen);
+
 	const [loading, setLoading] = useState(false);
 	const [sent, setSent] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const form = useForm({
 		initialValues: {
-			name: "",
-			email: "",
 			subject: "",
 			message: "",
+			question,
 		},
 		validate: {
-			name: (value) => (value.trim().length < 2 ? "Name must be more than 2 chars" : null),
-			email: (value) => (!/^\S+@\S+$/.test(value) ? "Email is not valid" : null),
 			subject: (value) => (value.trim().length === 0 ? "Subject is required" : null),
 			message: (value) => (value.trim().length === 0 ? "Message can't be empty" : null),
 		},
@@ -57,7 +58,7 @@ export function ContactForm() {
 				setError(errorMessage);
 			}
 		} catch (e) {
-			console.error("Couldn't send the message", e);
+			console.error("Couldn't send the message.", e);
 			setError("Something went wrong. Please try again later.");
 		} finally {
 			setLoading(false);
@@ -69,36 +70,20 @@ export function ContactForm() {
 	}
 
 	return (
-		<Flex justify="flex-start" align="flex-start" direction="row" wrap="wrap">
+		<Modal opened={reportModalOpen} onClose={closeReportModal} title="Report question" centered>
 			{sent ? (
-				<Text>Your message has been sent. We will do our best to get back to you within a few hours!</Text>
+				<Text>Nice, your report has been sent, cheers!</Text>
 			) : (
 				<Box>
 					{error && <Text>{error}</Text>}
 					<form onSubmit={form.onSubmit(handleSubmit)}>
-						<SimpleGrid cols={{ base: 1, sm: 2 }} mb="md">
-							<TextInput
-								withAsterisk
-								label="Name"
-								placeholder="Your name"
-								name="name"
-								{...form.getInputProps("name")}
-							/>
-							<TextInput
-								withAsterisk
-								label="Email"
-								placeholder="Your email"
-								name="email"
-								{...form.getInputProps("email")}
-							/>
-						</SimpleGrid>
-
 						<TextInput
 							withAsterisk
 							label="Subject"
 							placeholder="Subject"
 							name="subject"
 							mb="md"
+							data-autofocus
 							{...form.getInputProps("subject")}
 						/>
 						<Textarea
@@ -114,12 +99,12 @@ export function ContactForm() {
 
 						<Group justify="left">
 							<Button variant="outline" type="submit" size="md">
-								Send message
+								Report question
 							</Button>
 						</Group>
 					</form>
 				</Box>
 			)}
-		</Flex>
+		</Modal>
 	);
 }
