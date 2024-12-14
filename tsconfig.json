@@ -21,6 +21,7 @@
 			"@/*": ["./src/*"],
 			"@hooks/*": ["./src/app/hooks/*"],
 			"@components/*": ["./src/app/components/*"],
+			"@utils/*": ["./src/app/utils/*"],
 			"@stores/*": ["./src/app/stores/*"],
 			"@tabler/icons-react": ["./node_modules/@tabler/icons-react"]
 		}
