@@ -98,7 +98,6 @@ export const Progress = () => {
 			<Group justify="space-between" mb={20}>
 				<Text>Daily progress</Text>
 				<SegmentedControl
-					size="md"
 					value={limit.toString()}
 					onChange={(value: string) => setLimit(Number(value))}
 					data={[

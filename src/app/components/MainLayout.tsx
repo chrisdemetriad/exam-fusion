@@ -29,9 +29,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 					padding: rem(16),
 				}}
 			>
-				<Group h="100%" style={{ flexShrink: 0 }}>
-					<Burger opened={navbarOpen} onClick={toggleNavbar} size="sm" />
-				</Group>
+				{session && (
+					<Group h="100%" style={{ flexShrink: 0 }}>
+						<Burger opened={navbarOpen} onClick={toggleNavbar} size="sm" />
+					</Group>
+				)}
 				<Box style={{ width: "100%" }}>
 					<Header />
 				</Box>

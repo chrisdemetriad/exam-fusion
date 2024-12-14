@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Group, SegmentedControl, Table, Text } from "@mantine/core";
+import { Box, Group, SegmentedControl, Avatar, Text, Stack, rem, useMantineColorScheme } from "@mantine/core";
 import { useState } from "react";
 import { useTestStore } from "@stores/stateStore";
 import { PageLoader } from "@components/Loader";
@@ -32,6 +32,8 @@ interface LeaderboardData {
 export const Leaderboard = () => {
 	const [selectedCategory, setSelectedCategory] = useState("mostTests");
 	const baseUrl = useTestStore((state) => state.baseUrl);
+	const { colorScheme } = useMantineColorScheme();
+	const dark = colorScheme === "dark";
 
 	const { data: leaderboardData, error, loading } = useFetch<LeaderboardData>(`${baseUrl}/api/v1/tests/leaderboard`);
 
@@ -47,81 +49,16 @@ export const Leaderboard = () => {
 		return <Text c="red">Couldn't get the leaderboard data, please try again.</Text>;
 	}
 
-	const renderTable = () => {
-		const data = leaderboardData[selectedCategory as keyof LeaderboardData];
+	const data = leaderboardData[selectedCategory as keyof LeaderboardData];
 
-		if (!Array.isArray(data) || data.length === 0) {
-			return <Text c="dimmed">No data available for this category.</Text>;
-		}
-
-		switch (selectedCategory) {
-			case "mostTests":
-				return (
-					<Table highlightOnHover>
-						<Table.Thead>
-							<Table.Tr>
-								<Table.Th>Name</Table.Th>
-								<Table.Th>Tests Taken</Table.Th>
-							</Table.Tr>
-						</Table.Thead>
-						<Table.Tbody>
-							{(data as MostTests[]).map((entry) => (
-								<Table.Tr key={entry._id}>
-									<Table.Td>{entry._id}</Table.Td>
-									<Table.Td>{entry.testCount}</Table.Td>
-								</Table.Tr>
-							))}
-						</Table.Tbody>
-					</Table>
-				);
-			case "scores":
-				return (
-					<Table highlightOnHover>
-						<Table.Thead>
-							<Table.Tr>
-								<Table.Th>Name</Table.Th>
-								<Table.Th>Average Score</Table.Th>
-							</Table.Tr>
-						</Table.Thead>
-						<Table.Tbody>
-							{(data as Scores[]).map((entry) => (
-								<Table.Tr key={entry._id}>
-									<Table.Td>{entry._id}</Table.Td>
-									<Table.Td>{entry.averageScore.toFixed(2)}</Table.Td>
-								</Table.Tr>
-							))}
-						</Table.Tbody>
-					</Table>
-				);
-			case "times":
-				return (
-					<Table highlightOnHover>
-						<Table.Thead>
-							<Table.Tr>
-								<Table.Th>Name</Table.Th>
-								<Table.Th>Average Time</Table.Th>
-							</Table.Tr>
-						</Table.Thead>
-						<Table.Tbody>
-							{(data as Times[]).map((entry) => (
-								<Table.Tr key={entry._id}>
-									<Table.Td>{entry._id}</Table.Td>
-									<Table.Td>{(entry.averageTime / 1000).toFixed(2)} seconds</Table.Td>
-								</Table.Tr>
-							))}
-						</Table.Tbody>
-					</Table>
-				);
-			default:
-				return null;
-		}
-	};
+	if (!Array.isArray(data) || data.length === 0) {
+		return <Text c="dimmed">No data available for this category.</Text>;
+	}
 
 	return (
 		<Box>
-			<Group justify="end">
+			<Group justify="end" mb="xl">
 				<SegmentedControl
-					size="md"
 					value={selectedCategory}
 					onChange={setSelectedCategory}
 					data={[
@@ -132,7 +69,52 @@ export const Leaderboard = () => {
 				/>
 			</Group>
 
-			<Group>{renderTable()}</Group>
+			<Stack align="stretch" justify="center">
+				{data.map((entry, index) => (
+					<Group
+						key={entry._id}
+						align="center"
+						style={{
+							width: rem(400),
+							margin: "0 auto",
+							padding: rem(10),
+							background: dark ? "#333" : "#F5F5FF",
+							borderRadius: rem(8),
+							border: `1px solid ${index === 0 ? "gold" : "#9fc6bb"}`,
+						}}
+					>
+						<Box
+							style={{
+								width: rem(40),
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+								fontWeight: "bold",
+								fontSize: rem(16),
+								background: "white",
+								borderRadius: "50%",
+								height: rem(40),
+								color: "#333333",
+							}}
+						>
+							{index + 1}
+						</Box>
+						<Avatar size="md" radius="xl" alt={entry._id} />
+						<Box style={{ flexGrow: 1 }}>
+							<Text size="sm" fw="700">
+								{entry._id}
+							</Text>
+						</Box>
+						<Box>
+							<Text size="sm" fw="700">
+								{selectedCategory === "mostTests" && `${(entry as MostTests).testCount}`}
+								{selectedCategory === "scores" && `${(entry as Scores).averageScore.toFixed(2)}`}
+								{selectedCategory === "times" && `${((entry as Times).averageTime / 1000).toFixed(2)}s`}
+							</Text>
+						</Box>
+					</Group>
+				))}
+			</Stack>
 		</Box>
 	);
 };

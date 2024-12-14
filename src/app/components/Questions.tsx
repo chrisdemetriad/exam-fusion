@@ -10,6 +10,7 @@ import Timer from "@components/Timer";
 import { useFetch } from "@hooks/useFetch";
 import { IconMessageQuestion } from "@tabler/icons-react";
 import { QuestionReportModal } from "./QuestionReportModal";
+import { ProgressBar } from "./ProgressBar";
 
 interface Answers {
 	answer: string;
@@ -208,6 +209,10 @@ export const Questions = () => {
 
 	return (
 		<Box>
+			<Box mb={20}>
+				<ProgressBar question={currentIndex + 1} total={totalQuestions} />
+			</Box>
+
 			<Group mb={40} justify="space-between">
 				<Text size="xl">
 					{provider} - {currentTest?.description}

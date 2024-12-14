@@ -81,19 +81,19 @@ export default function Home() {
 					</List>
 
 					<Group mt={30}>
-						<Button onClick={openAuthModal} radius="xl" size="md" style={{ flex: 1 }}>
+						<Button onClick={openAuthModal} size="md" style={{ flex: 1 }}>
 							Get started
 						</Button>
 					</Group>
 				</Box>
 				<Image
-					alt="Studying group"
-					src="/images/image.webp"
+					alt="Studying group (pngwing.com)"
+					src="/images/tree.png"
 					width="400"
-					height="400"
+					height="500"
 					style={{
 						width: rem(400),
-						height: rem(400),
+						height: rem(500),
 					}}
 				/>
 			</Box>
