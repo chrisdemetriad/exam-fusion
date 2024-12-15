@@ -66,7 +66,7 @@ export function QuestionReportModal({ question }: { question: Question }) {
 	};
 
 	if (loading) {
-		return <PageLoader />;
+		<PageLoader />;
 	}
 
 	return (
@@ -75,7 +75,7 @@ export function QuestionReportModal({ question }: { question: Question }) {
 				<Text>Nice, your report has been sent, cheers!</Text>
 			) : (
 				<Box>
-					{error && <Text>{error}</Text>}
+					{error && <Text>{error}.</Text>}
 					<form onSubmit={form.onSubmit(handleSubmit)}>
 						<TextInput
 							withAsterisk

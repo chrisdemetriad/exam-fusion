@@ -1,4 +1,5 @@
 import { PageTitle } from "@/app/components/PageTitle";
+import { Settings } from "@/app/components/Settings";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -8,5 +9,10 @@ export default async function SettingsRoute(): Promise<JSX.Element> {
 		redirect("/");
 	}
 
-	return <PageTitle title="Settings" />;
+	return (
+		<>
+			<PageTitle title="Settings" />
+			<Settings />
+		</>
+	);
 }

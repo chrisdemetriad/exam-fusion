@@ -134,7 +134,7 @@ export const Tests = () => {
 	if (error) {
 		return (
 			<ScrollArea>
-				<Text c="red">{error}</Text>
+				<Text c="red">{error}.</Text>
 			</ScrollArea>
 		);
 	}

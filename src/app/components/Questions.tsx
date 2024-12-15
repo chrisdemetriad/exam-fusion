@@ -105,8 +105,12 @@ export const Questions = () => {
 		}
 	};
 
-	if (loading) return <PageLoader />;
-	if (error) return <Text>Error: {error}</Text>;
+	if (loading) {
+		return <PageLoader />;
+	}
+	if (error) {
+		return <Text>Error: {error}.</Text>;
+	}
 
 	if (!started) {
 		return (

@@ -65,7 +65,7 @@ export function ContactForm() {
 	};
 
 	if (loading) {
-		return <PageLoader />;
+		<PageLoader />;
 	}
 
 	return (
@@ -74,7 +74,7 @@ export function ContactForm() {
 				<Text>Your message has been sent. We will do our best to get back to you within a few hours!</Text>
 			) : (
 				<Box>
-					{error && <Text>{error}</Text>}
+					{error && <Text>{error}.</Text>}
 					<form onSubmit={form.onSubmit(handleSubmit)}>
 						<SimpleGrid cols={{ base: 1, sm: 2 }} mb="md">
 							<TextInput

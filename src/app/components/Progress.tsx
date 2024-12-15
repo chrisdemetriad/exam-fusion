@@ -60,8 +60,12 @@ export const Progress = () => {
 
 	const filteredData = progressData?.filter((item) => visibleProviders.includes(item.testId.provider)) || [];
 
-	if (loading) return <PageLoader />;
-	if (error) return <Text c="red">{error}</Text>;
+	if (loading) {
+		return <PageLoader />;
+	}
+	if (error) {
+		return <Text c="red">{error}.</Text>;
+	}
 
 	if (!progressData || progressData.length === 0) {
 		return (

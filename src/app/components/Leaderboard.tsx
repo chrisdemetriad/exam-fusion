@@ -40,9 +40,8 @@ export const Leaderboard = () => {
 	if (loading) {
 		return <PageLoader />;
 	}
-
 	if (error) {
-		return <Text c="red">{error}</Text>;
+		return <Text c="red">{error}.</Text>;
 	}
 
 	if (!leaderboardData) {
