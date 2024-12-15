@@ -2,7 +2,7 @@
 import { Box, Container, Group, Text, rem } from "@mantine/core";
 import UserAuth from "@components/UserAuth";
 import UserAuthModal from "@components/UserAuthModal";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "@components/ThemeToggle";
 
 export default function Header() {
 	return (

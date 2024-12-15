@@ -9,8 +9,8 @@ import { PageLoader } from "@components/Loader";
 import Timer from "@components/Timer";
 import { useFetch } from "@hooks/useFetch";
 import { IconMessageQuestion } from "@tabler/icons-react";
-import { QuestionReportModal } from "./QuestionReportModal";
-import { ProgressBar } from "./ProgressBar";
+import { QuestionReportModal } from "@components/QuestionReportModal";
+import { ProgressBar } from "@components/ProgressBar";
 
 interface Answers {
 	answer: string;

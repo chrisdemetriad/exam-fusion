@@ -6,8 +6,8 @@ import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTestStore } from "@stores/stateStore";
-import { GridTests } from "./components/GridTests";
-import { PageTitle } from "./components/PageTitle";
+import { GridTests } from "@components/GridTests";
+import { PageTitle } from "@components/PageTitle";
 
 export default function Home() {
 	const { data: session } = useSession() as { data: Session | null };
