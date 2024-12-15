@@ -93,6 +93,7 @@ export const Tests = () => {
 	const router = useRouter();
 
 	const { data, error, loading } = useFetch<TestData[]>(`${baseUrl}/api/v1/tests/all`);
+
 	useEffect(() => {
 		if (data) {
 			setTests(data);

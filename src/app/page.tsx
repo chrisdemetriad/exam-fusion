@@ -6,6 +6,8 @@ import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTestStore } from "@stores/stateStore";
+import { GridTests } from "./components/GridTests";
+import { PageTitle } from "./components/PageTitle";
 
 export default function Home() {
 	const { data: session } = useSession() as { data: Session | null };
@@ -99,6 +101,9 @@ export default function Home() {
 			</Box>
 		</Container>
 	) : (
-		<Text>Please choose a test from the sidebar to start!</Text>
+		<>
+			<PageTitle title="Tests" />
+			<GridTests />
+		</>
 	);
 }
