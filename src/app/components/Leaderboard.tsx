@@ -1,10 +1,12 @@
 "use client";
 
-import { Box, Group, SegmentedControl, Avatar, Text, Stack, rem, useMantineColorScheme } from "@mantine/core";
+import { Avatar, Box, Group, rem, SegmentedControl, Text } from "@mantine/core";
 import { useState } from "react";
 import { useTestStore } from "@stores/stateStore";
 import { PageLoader } from "@components/Loader";
 import { useFetch } from "@hooks/useFetch";
+import { useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 
 interface MostTests {
 	_id: string;
@@ -30,12 +32,15 @@ interface LeaderboardData {
 }
 
 export const Leaderboard = () => {
+	const { data: session } = useSession() as { data: Session | null };
 	const [selectedCategory, setSelectedCategory] = useState("mostTests");
 	const baseUrl = useTestStore((state) => state.baseUrl);
-	const { colorScheme } = useMantineColorScheme();
-	const dark = colorScheme === "dark";
 
-	const { data: leaderboardData, error, loading } = useFetch<LeaderboardData>(`${baseUrl}/api/v1/tests/leaderboard`);
+	const {
+		data: leaderboardData,
+		error,
+		loading,
+	} = useFetch<LeaderboardData>(`${baseUrl}/api/v1/tests/leaderboard`);
 
 	if (loading) {
 		return <PageLoader />;
@@ -45,7 +50,9 @@ export const Leaderboard = () => {
 	}
 
 	if (!leaderboardData) {
-		return <Text c="red">Couldn't get the leaderboard data, please try again.</Text>;
+		return (
+			<Text c="red">Couldn't get the leaderboard data, please try again.</Text>
+		);
 	}
 
 	const data = leaderboardData[selectedCategory as keyof LeaderboardData];
@@ -68,52 +75,43 @@ export const Leaderboard = () => {
 				/>
 			</Group>
 
-			<Stack align="stretch" justify="center">
+			<Box>
 				{data.map((entry, index) => (
 					<Group
+						justify="flex-start"
 						key={entry._id}
-						align="center"
 						style={{
-							width: rem(400),
-							margin: "0 auto",
-							padding: rem(10),
-							background: dark ? "#333" : "#F5F5FF",
-							borderRadius: rem(8),
-							border: `1px solid ${index === 0 ? "gold" : "#9fc6bb"}`,
+							paddingTop: index === 0 ? 0 : rem(15),
+							marginTop: index === 0 ? 0 : rem(15),
+							borderTop:
+								index === 0
+									? "none"
+									: "1px solid var(--app-shell-border-color)",
 						}}
 					>
-						<Box
-							style={{
-								width: rem(40),
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-								fontWeight: "bold",
-								fontSize: rem(16),
-								background: "white",
-								borderRadius: "50%",
-								height: rem(40),
-								color: "#333333",
-							}}
-						>
-							{index + 1}
-						</Box>
-						<Avatar size="md" radius="xl" alt={entry._id} />
-						<Box style={{ flexGrow: 1 }}>
-							<Text size="sm" fw="700">
-								{entry._id}
-							</Text>
-						</Box>
-						<Box>
-							<Text size="sm" fw="700">
-								{selectedCategory === "mostTests" && `${(entry as MostTests).testCount}`}
-								{selectedCategory === "scores" && `${(entry as Scores).averageScore.toFixed(2)}`}
-								{selectedCategory === "times" && `${((entry as Times).averageTime / 1000).toFixed(2)}s`}
-							</Text>
-						</Box>
+						<Avatar size="md">{index + 1}</Avatar>
+						<Avatar
+							size="md"
+							radius="xl"
+							alt={entry._id}
+							src={
+								entry._id === session?.user?.email
+									? session?.user?.image
+									: undefined
+							}
+						/>
+						<Text>{entry._id}</Text>
+						<Text size="xs" c="dimmed">
+							{selectedCategory === "mostTests" &&
+								`${(entry as MostTests).testCount} tests taken`}
+							{selectedCategory === "scores" &&
+								`${(entry as Scores).averageScore.toFixed(2)} average score`}
+							{selectedCategory === "times" &&
+								`${((entry as Times).averageTime / 1000).toFixed(2)}s average time`}
+						</Text>
 					</Group>
 				))}
-			</Stack>
+			</Box>
 		</Box>
 	);
 };
