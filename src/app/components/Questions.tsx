@@ -81,13 +81,16 @@ export const Questions = () => {
 		isCorrect: null,
 		show: false,
 	});
-	const startTime = new Date();
+	const [startTime, setStartTime] = useState<Date | null>(null);
 
 	useEffect(() => {
 		if (provider && testId) resetTest();
 	}, [provider, testId, resetTest]);
 
-	const handleStartTest = () => setStarted(true);
+	const handleStartTest = () => {
+		setStartTime(new Date());
+		setStarted(true);
+	};
 
 	const handleSaveTest = async (testData: TestData) => {
 		try {
