@@ -21,7 +21,7 @@ export const HorizontalBarChart: FC<Props> = ({ data, title }) => {
 				<BarChart data={data} layout="vertical" margin={{ left: 0 }}>
 					<XAxis hide type="number" />
 					<YAxis dataKey="name" type="category" axisLine={false} tickLine={false} width={80} />
-					<Bar dataKey="value" barSize={20} radius={[10, 10, 10, 10]}>
+					<Bar dataKey="value" barSize={20} radius={[5, 5, 5, 5]}>
 						{data.map((entry, index) => (
 							<Cell key={`cell-${index}`} fill={getColor(index)} />
 						))}
