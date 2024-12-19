@@ -3,13 +3,16 @@
 import { Text, Box, SegmentedControl, Group } from "@mantine/core";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, LineChart, Line, LabelList } from "recharts";
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, LineChart, Line } from "recharts";
 import { useTestStore } from "@stores/stateStore";
-import { CustomTooltip } from "@components/Charts/CustomTooltip";
+import { BarChartCustomTooltip } from "@components/Charts/BarChartCustomTooltip";
 import { useFetch } from "@hooks/useFetch";
 import { useState, useEffect } from "react";
 import { PageLoader } from "@components/Loader";
-import { BarChartLegend } from "@components/BarChartLegend";
+import { BarChartLegend } from "@/app/components/Charts/BarChartLegend";
+import { useMemo } from "react";
+import Link from "next/link";
+import { HorizontalBarChart } from "./Charts/HorizontalBarChart";
 
 interface TestId {
 	provider: string;
@@ -25,17 +28,34 @@ interface ProgressData {
 	testDate: string;
 	duration: number;
 }
-import { useMemo } from "react";
-import Link from "next/link";
 
 export const Progress = () => {
 	const baseUrl = useTestStore((state) => state.baseUrl);
-	const [limit, setLimit] = useState(10);
+	const [limit, setLimit] = useState(25);
 	const [visibleProviders, setVisibleProviders] = useState<string[]>([]);
 
 	const { data: session } = useSession() as { data: Session | null };
 	const userEmail = session?.user?.email;
+	const data1 = [
+		{ name: "ACCA", value: 85 },
+		{ name: "ACA", value: 70 },
+		{ name: "CIMA", value: 90 },
+		{ name: "AAT", value: 90 },
+	];
 
+	const data2 = [
+		{ name: "ACCA", value: 45 },
+		{ name: "ACA", value: 85 },
+		{ name: "CIMA", value: 75 },
+		{ name: "AAT", value: 60 },
+	];
+
+	const data3 = [
+		{ name: "ACCA", value: 65 },
+		{ name: "ACA", value: 30 },
+		{ name: "CIMA", value: 20 },
+		{ name: "AAT", value: 85 },
+	];
 	const {
 		data: progressData,
 		loading,
@@ -91,9 +111,9 @@ export const Progress = () => {
 	});
 
 	const providerColours: { [key: string]: string } = {
-		ACCA: "cornflowerblue",
+		ACCA: "darkgoldenrod",
 		AAT: "darkkhaki",
-		ACA: "lightpink",
+		ACA: "burlywood",
 		CIMA: "darkolivegreen",
 	};
 
@@ -105,8 +125,8 @@ export const Progress = () => {
 					value={limit.toString()}
 					onChange={(value: string) => setLimit(Number(value))}
 					data={[
-						{ label: "Last 10 tests", value: "10" },
-						{ label: "Last 20 tests", value: "20" },
+						{ label: "Last 25 tests", value: "25" },
+						{ label: "Last 50 tests", value: "50" },
 					]}
 				/>
 			</Group>
@@ -122,25 +142,26 @@ export const Progress = () => {
 				<ResponsiveContainer>
 					<BarChart data={filteredData} margin={{ bottom: 80 }}>
 						<XAxis
+							axisLine={false}
+							tickLine={false}
 							dataKey={(entry) => `${entry.testId.provider} - ${entry.testId.title}`}
 							angle={-30}
 							textAnchor="end"
 							interval={0}
 							style={{ fontSize: "10px" }}
 						/>
-						<Tooltip content={<CustomTooltip />} />
+						<Tooltip cursor={false} content={<BarChartCustomTooltip />} />
 						<Bar dataKey={(entry) => entry.score} stackId="provider">
 							{filteredData.map((entry, index) => {
 								const barColor = providerColours[entry.testId.provider] || "#8884d8";
 								return (
-									<Cell key={`cell-${index}`} fill={entry.score === 0 || entry.score === null ? "gray" : barColor} />
+									<Cell
+										key={`cell-${index}`}
+										fill={entry.score === 0 || entry.score === null ? "gray" : barColor}
+										radius={[5, 5, 0, 0] as unknown as string | number}
+									/>
 								);
 							})}
-							<LabelList
-								dataKey={(entry) => (entry as ProgressData).testId.provider}
-								position="insideBottom"
-								style={{ fontSize: "10px", fill: "#000", background: "red" }}
-							/>
 						</Bar>
 					</BarChart>
 				</ResponsiveContainer>
@@ -151,11 +172,16 @@ export const Progress = () => {
 				<ResponsiveContainer>
 					<LineChart data={averageScores} margin={{ left: 10, right: 10 }}>
 						<XAxis dataKey="provider" padding={{ left: 10, right: 10 }} tickMargin={10} />
-						<Tooltip />
 						<Line type="monotone" dataKey="averageScore" stroke="#8884d8" />
 					</LineChart>
 				</ResponsiveContainer>
 			</Box>
+
+			<Group>
+				<HorizontalBarChart data={data1} title="Best average scores by provider" />
+				<HorizontalBarChart data={data2} title="Best test times" />
+				<HorizontalBarChart data={data3} title="Most wrong questions" />
+			</Group>
 		</Box>
 	);
 };
