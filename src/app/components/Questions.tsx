@@ -27,7 +27,7 @@ export interface Question {
 interface TestData {
 	testId: string;
 	userId: string;
-	startTime: Date;
+	startTime: Date | null;
 	finishTime: Date;
 	score: number;
 	number: number;
