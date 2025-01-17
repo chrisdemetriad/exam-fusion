@@ -6,16 +6,16 @@ import { useEffect, useState } from "react";
 import { useTestStore } from "@stores/stateStore";
 import { PageLoader } from "@components/Loader";
 import { useFetch } from "@hooks/useFetch";
-import { TestData } from "@components/Tests";
+import { Tests } from "@components/Tests";
 
 export const GridTests = () => {
-	const [tests, setTests] = useState<TestData[]>([]);
+	const [tests, setTests] = useState<Tests[]>([]);
 	const baseUrl = useTestStore((state) => state.baseUrl);
 	const setSelectedTest = useTestStore((state) => state.setCurrentTest);
 	const router = useRouter();
 	const theme = useMantineTheme();
 
-	const { data, error, loading } = useFetch<TestData[]>(`${baseUrl}/api/v1/tests/all`);
+	const { data, error, loading } = useFetch<Tests[]>(`${baseUrl}/api/v1/tests/all`);
 
 	useEffect(() => {
 		if (data) {
@@ -23,7 +23,7 @@ export const GridTests = () => {
 		}
 	}, [data]);
 
-	const handleTestClick = (test: TestData) => {
+	const handleTestClick = (test: Tests) => {
 		setSelectedTest(test);
 		router.push(`/practice/${test.provider}/${test._id}`);
 	};

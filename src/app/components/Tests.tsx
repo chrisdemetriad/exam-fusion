@@ -8,7 +8,7 @@ import { useTestStore } from "@stores/stateStore";
 import { PageLoader } from "@components/Loader";
 import { useFetch } from "@hooks/useFetch";
 
-export interface TestData {
+export interface Tests {
 	_id: string;
 	provider: string;
 	level: string;
@@ -59,12 +59,12 @@ const TableHeader = ({ children, reversed, sorted, onSort }: TableHeader) => {
 	);
 };
 
-const filterData = (data: TestData[], search: string) => {
+const filterData = (data: Tests[], search: string) => {
 	const query = search.toLowerCase().trim();
 	return data.filter((item) => Object.values(item).some((value) => value.toLowerCase().includes(query)));
 };
 
-const sortData = (data: TestData[], payload: { sortBy: keyof TestData | null; reversed: boolean; search: string }) => {
+const sortData = (data: Tests[], payload: { sortBy: keyof Tests | null; reversed: boolean; search: string }) => {
 	const { sortBy } = payload;
 
 	if (!sortBy) {
@@ -83,16 +83,16 @@ const sortData = (data: TestData[], payload: { sortBy: keyof TestData | null; re
 };
 
 export const Tests = () => {
-	const [tests, setTests] = useState<TestData[]>([]);
+	const [tests, setTests] = useState<Tests[]>([]);
 	const [search, setSearch] = useState("");
-	const [sortedData, setSortedData] = useState<TestData[]>([]);
-	const [sortBy, setSortBy] = useState<keyof TestData | null>(null);
+	const [sortedData, setSortedData] = useState<Tests[]>([]);
+	const [sortBy, setSortBy] = useState<keyof Tests | null>(null);
 	const [reverseSortDirection, setReverseSortDirection] = useState(false);
 	const baseUrl = useTestStore((state) => state.baseUrl);
 	const setSelectedTest = useTestStore((state) => state.setCurrentTest);
 	const router = useRouter();
 
-	const { data, error, loading } = useFetch<TestData[]>(`${baseUrl}/api/v1/tests/all`);
+	const { data, error, loading } = useFetch<Tests[]>(`${baseUrl}/api/v1/tests/all`);
 
 	useEffect(() => {
 		if (data) {
@@ -104,7 +104,7 @@ export const Tests = () => {
 		setSortedData(sortData(tests, { sortBy, reversed: reverseSortDirection, search }));
 	}, [tests, sortBy, reverseSortDirection, search]);
 
-	const setSorting = (field: keyof TestData) => {
+	const setSorting = (field: keyof Tests) => {
 		const reversed = field === sortBy ? !reverseSortDirection : false;
 		setReverseSortDirection(reversed);
 		setSortBy(field);
@@ -123,7 +123,7 @@ export const Tests = () => {
 		);
 	};
 
-	const handleRowClick = (test: TestData) => {
+	const handleRowClick = (test: Tests) => {
 		setSelectedTest(test);
 		router.push(`/practice/${test.provider}/${test._id}`);
 	};

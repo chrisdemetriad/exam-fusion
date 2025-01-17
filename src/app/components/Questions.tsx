@@ -101,7 +101,7 @@ export const Questions = () => {
 			});
 			if (!response.ok) {
 				const errorData = await response.json();
-				throw new Error(`Couldn't save the test: ${errorData.message || "Error"}`);
+				throw new Error(`Couldn't save the test ${errorData.message || "Error"}`);
 			}
 		} catch (err) {
 			console.error(`Couldn't save the test: ${err}`);
@@ -279,7 +279,14 @@ export const Questions = () => {
 
 				<Tooltip arrowSize={8} label="Report question" withArrow position="top">
 					<Box onClick={openReportModal}>
-						<IconMessageQuestion style={{ cursor: "pointer", color: "gray", width: rem(24), height: rem(24) }} />
+						<IconMessageQuestion
+							style={{
+								cursor: "pointer",
+								color: "gray",
+								width: rem(24),
+								height: rem(24),
+							}}
+						/>
 					</Box>
 				</Tooltip>
 				<QuestionReportModal question={currentQuestion} />

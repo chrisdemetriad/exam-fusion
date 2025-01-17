@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { TestData } from "@components/Tests";
+import { Tests } from "@components/Tests";
 
 interface AnswerSummary {
 	id: number;
@@ -16,7 +16,7 @@ interface TestState {
 	authModalOpen: boolean;
 	reportModalOpen: boolean;
 	baseUrl: string;
-	currentTest: TestData | null;
+	currentTest: Tests | null;
 	navbarOpen: boolean;
 	toggleNavbar: () => void;
 	addAnswer: (answer: AnswerSummary) => void;
@@ -27,7 +27,7 @@ interface TestState {
 	closeAuthModal: () => void;
 	openReportModal: () => void;
 	closeReportModal: () => void;
-	setCurrentTest: (test: TestData) => void;
+	setCurrentTest: (test: Tests) => void;
 }
 
 export const useTestStore = create<TestState>()(
@@ -54,7 +54,7 @@ export const useTestStore = create<TestState>()(
 			closeReportModal: () => set({ reportModalOpen: false }),
 		}),
 		{
-			name: "test-store",
+			name: "exam-fusion-store",
 			partialize: (state) => ({
 				answers: state.answers,
 				currentTest: state.currentTest,
